@@ -7,8 +7,7 @@ import com.example.shoplist.data.*
 
 class RecipeFilterController {
     interface View {
-        fun renderCategoriesLoadState(state: LoadState<CategoriesEntity>)
-        fun renderAreasLoadState(state: LoadState<AreasEntity>)
+        fun renderFilterLoadState(state: LoadState<Any>)
         fun renderMealsLoadState(state: LoadState<MealsEntity>)
     }
 

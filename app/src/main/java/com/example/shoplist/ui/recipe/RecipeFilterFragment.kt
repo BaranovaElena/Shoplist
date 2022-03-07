@@ -24,8 +24,8 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.categoriesLoadStateLiveData.observe(viewLifecycleOwner) { renderCategoriesLoadState(it) }
-        model.areasLoadStateLiveData.observe(viewLifecycleOwner) { renderAreasLoadState(it) }
+        model.categoriesLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
+        model.areasLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
         model.mealsLoadStateLiveData.observe(viewLifecycleOwner) { renderMealsLoadState(it)}
 
         binding.recipeFilterChipGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -43,21 +43,11 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         }
     }
 
-    override fun renderCategoriesLoadState(state: LoadState<CategoriesEntity>) {
+    override fun renderFilterLoadState(state: LoadState<Any>) {
         when (state) {
-            is LoadState.Success<CategoriesEntity> -> {
+            is LoadState.Success -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
-                val valuesArray = mutableListOf<String>()
-                for (value in state.value.categories) {
-                    valuesArray.add(value.title)
-                }
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    valuesArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.recipeFilterSpinner.adapter = adapter
+                fillSpinner(state)
             }
             is LoadState.Error -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
@@ -67,28 +57,27 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         }
     }
 
-    override fun renderAreasLoadState(state: LoadState<AreasEntity>) {
-        when (state) {
-            is LoadState.Success<AreasEntity> -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                val valuesArray = mutableListOf<String>()
+    private fun fillSpinner(state: LoadState.Success<Any>) {
+        val valuesArray = mutableListOf<String>()
+        when (state.value) {
+            is CategoriesEntity -> {
+                for (value in state.value.categories) {
+                    valuesArray.add(value.title)
+                }
+            }
+            is AreasEntity -> {
                 for (value in state.value.areas) {
                     valuesArray.add(value.title)
                 }
-                val adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    valuesArray
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                binding.recipeFilterSpinner.adapter = adapter
             }
-            is LoadState.Error -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                showErrorMessage(state)
-            }
-            is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
         }
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            valuesArray
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.recipeFilterSpinner.adapter = adapter
     }
 
     override fun renderMealsLoadState(state: LoadState<MealsEntity>) {
