@@ -6,6 +6,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.data.*
@@ -16,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
     private val model: RecipeFilterController.BaseViewModel by viewModel()
+    private val recyclerAdapter = MealsAdapter()
 
     companion object {
         fun newInstance() = RecipeFilterFragment()
@@ -28,6 +30,13 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         model.areasLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
         model.mealsLoadStateLiveData.observe(viewLifecycleOwner) { renderMealsLoadState(it)}
 
+        defineListeners()
+
+        binding.recipeFilterRecyclerView.adapter = recyclerAdapter
+        binding.recipeFilterRecyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun defineListeners() {
         binding.recipeFilterChipGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.recipe_filter_chip_category -> { model.onChipChecked(Filters.CATEGORY) }
@@ -84,7 +93,7 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         when (state) {
             is LoadState.Success<MealsEntity> -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
-                Toast.makeText(context, state.value.meals[0].title, Toast.LENGTH_SHORT).show()
+                recyclerAdapter.updateList(state.value.meals)
             }
             is LoadState.Error -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
