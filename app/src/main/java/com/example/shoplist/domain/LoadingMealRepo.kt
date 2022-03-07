@@ -7,7 +7,7 @@ import com.example.shoplist.data.MealsEntity
 import retrofit2.Callback
 
 interface LoadingMealRepo {
-    fun getMealsByFilter(filter: Filters, value: String, callback: Callback<MealsEntity>)
-    fun getCategories(callback: Callback<CategoriesEntity>)
-    fun getAreas(callback: Callback<AreasEntity>)
+    suspend fun getMealsByFilter(filter: Filters, value: String) : MealsEntity
+    suspend fun getCategories() : CategoriesEntity
+    suspend fun getAreas() : AreasEntity
 }
