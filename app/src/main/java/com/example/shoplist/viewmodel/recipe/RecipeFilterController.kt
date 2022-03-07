@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoplist.data.*
-import com.example.shoplist.domain.LoadingMealRepo
 
 class RecipeFilterController {
     interface View {
@@ -21,7 +20,6 @@ class RecipeFilterController {
         val categoriesLoadStateLiveData: LiveData<LoadState<CategoriesEntity>> = categoriesLoadStateLiveDataMutable,
         val areasLoadStateLiveData: LiveData<LoadState<AreasEntity>> = areasLoadStateLiveDataMutable
     ) : ViewModel() {
-        abstract fun onAttached(repo: LoadingMealRepo)
         abstract fun onChipChecked(filter: Filters)
         abstract fun onFilterValueSelected(filterValue: String)
     }

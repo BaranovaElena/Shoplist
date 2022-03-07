@@ -7,19 +7,15 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.shoplist.App
 import com.example.shoplist.R
 import com.example.shoplist.data.*
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
-import com.example.shoplist.domain.LoadingMealRepo
-import com.example.shoplist.domain.LoadingMealRetrofitImpl
-import com.example.shoplist.viewmodel.recipe.RecipeFilerViewModel
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
-    private val model: RecipeFilterController.BaseViewModel = RecipeFilerViewModel()
-    private lateinit var loadingMealRepo: LoadingMealRepo
+    private val model: RecipeFilterController.BaseViewModel by viewModel()
 
     companion object {
         fun newInstance() = RecipeFilterFragment()
@@ -27,10 +23,7 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val app: App = requireActivity().application as App
 
-        loadingMealRepo = LoadingMealRetrofitImpl(app.retrofitService)
-        model.onAttached(loadingMealRepo)
         model.categoriesLoadStateLiveData.observe(viewLifecycleOwner) { renderCategoriesLoadState(it) }
         model.areasLoadStateLiveData.observe(viewLifecycleOwner) { renderAreasLoadState(it) }
         model.mealsLoadStateLiveData.observe(viewLifecycleOwner) { renderMealsLoadState(it)}

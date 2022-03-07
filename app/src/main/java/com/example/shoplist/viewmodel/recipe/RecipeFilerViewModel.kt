@@ -6,13 +6,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RecipeFilerViewModel: RecipeFilterController.BaseViewModel() {
-    private lateinit var repo: LoadingMealRepo
+class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterController.BaseViewModel() {
     private var currentFilter: Filters? = null
-
-    override fun onAttached(repo: LoadingMealRepo) {
-        this.repo = repo
-    }
 
     override fun onChipChecked(filter: Filters) {
         currentFilter = filter
