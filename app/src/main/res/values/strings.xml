@@ -12,4 +12,6 @@
     <string name="recipe_tab_filter">Find by filter</string>
     <string name="recipe_tab_search">Find by search</string>
     <string name="hello_blank_fragment">hello_blank_fragment</string>
+    <string name="server_error_message">Server error</string>
+    <string name="load_error_message">Load error</string>
 </resources>
