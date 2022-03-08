@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/default_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SettingsFragment">
+    tools:context=".ui.SettingsFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/theme_title_text_view"
