@@ -4,7 +4,7 @@
         <item>
             <shape>
                 <solid
-                    android:color="@color/white">
+                    android:color="?attr/colorSurface">
                 </solid>
                 <corners android:radius="3dp" />
                 <padding
@@ -14,7 +14,7 @@
                     android:top="10dp" />
                 <stroke
                     android:width="2dp"
-                    android:color="@color/grey"/>
+                    android:color="@color/gray_800"/>
             </shape>
         </item>
         <item
