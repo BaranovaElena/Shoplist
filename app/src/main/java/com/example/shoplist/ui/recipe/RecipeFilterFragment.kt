@@ -11,6 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.data.*
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
+import com.example.shoplist.ui.MealsAdapter
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
