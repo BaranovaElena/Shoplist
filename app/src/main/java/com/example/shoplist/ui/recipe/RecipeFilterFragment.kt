@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -12,6 +11,7 @@ import com.example.shoplist.R
 import com.example.shoplist.data.*
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.ui.MealsAdapter
+import com.example.shoplist.ui.showErrorMessage
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,7 +61,7 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
             }
             is LoadState.Error -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
-                showErrorMessage(state)
+                showErrorMessage(requireContext(), state)
             }
             is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
         }
@@ -98,22 +98,9 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
             }
             is LoadState.Error -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
-                showErrorMessage(state)
+                showErrorMessage(requireContext(), state)
             }
             is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
         }
-    }
-
-    private fun showErrorMessage(state: LoadState.Error) {
-        Toast.makeText(
-            context,
-            state.message ?: getString(
-                when (state.error) {
-                    Errors.SERVER_ERROR -> { R.string.server_error_message }
-                    Errors.LOAD_ERROR -> { R.string.load_error_message }
-                }
-            ),
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }

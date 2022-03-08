@@ -13,7 +13,17 @@ class FavoriteMealRoomImpl(private val dao: RecipesDao): SavingFavoriteMealRepo,
         }.flowOn(Dispatchers.IO)
     }
 
+    override suspend fun isMealExists(id: Int): Flow<Boolean> {
+        return flow {
+            emit (dao.isMealExist(id))
+        }.flowOn(Dispatchers.IO)
+    }
+
     override suspend fun saveMeal(meal: MealShortEntity) {
         dao.saveMeal(meal)
+    }
+
+    override suspend fun deleteMeal(meal: MealShortEntity) {
+        dao.deleteMeal(meal)
     }
 }

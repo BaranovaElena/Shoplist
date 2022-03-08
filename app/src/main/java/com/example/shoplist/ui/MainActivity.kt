@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private fun setNavigation(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_shop_list -> openFragment(RecipesFragment.newInstance())
-            R.id.nav_recipes -> openFragment(ShoplistFragment.newInstance())
+            R.id.nav_shop_list -> openFragment(ShoplistFragment.newInstance())
+            R.id.nav_recipes -> openFragment(RecipesFragment.newInstance())
             R.id.nav_favorites -> openFragment(FavoritesFragment.newInstance())
         }
         return true

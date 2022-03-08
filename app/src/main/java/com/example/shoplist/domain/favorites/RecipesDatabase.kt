@@ -2,6 +2,7 @@ package com.example.shoplist.domain.favorites
 
 import androidx.room.*
 import com.example.shoplist.data.MealShortEntity
+import kotlinx.coroutines.Deferred
 
 @Database(entities = [MealShortEntity::class], version = 1)
 abstract class RecipesDatabase : RoomDatabase() {
@@ -15,4 +16,10 @@ interface RecipesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveMeal(entity: MealShortEntity)
+
+    @Delete
+    fun deleteMeal(meal: MealShortEntity)
+
+    @Query("SELECT EXISTS(SELECT * FROM meals WHERE id = :id)")
+    fun isMealExist(id : Int) : Boolean
 }
