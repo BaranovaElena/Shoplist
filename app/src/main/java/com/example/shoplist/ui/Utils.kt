@@ -18,3 +18,7 @@ fun showErrorMessage(context: Context, error: LoadState.Error) {
         Toast.LENGTH_SHORT
     ).show()
 }
+
+enum class Themes {
+    DEFAULT, INDIGO, ORANGE
+}

@@ -14,4 +14,9 @@
     <string name="hello_blank_fragment">hello_blank_fragment</string>
     <string name="server_error_message">Server error</string>
     <string name="load_error_message">Load error</string>
+    <string name="nav_settings_title">Settings</string>
+    <string name="settings_theme_title_text">Choose the application theme:</string>
+    <string name="theme_default">Standart</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_orange">Orange</string>
 </resources>
