@@ -1,9 +1,13 @@
 package com.example.shoplist.di
 
+import androidx.room.Room
 import com.example.shoplist.BuildConfig
 import com.example.shoplist.domain.LoadingMealRepo
 import com.example.shoplist.domain.LoadingMealRetrofitImpl
 import com.example.shoplist.domain.MealRetrofitService
+import com.example.shoplist.domain.favorites.*
+import com.example.shoplist.viewmodel.favorites.FavoritesController
+import com.example.shoplist.viewmodel.favorites.FavoritesViewModel
 import com.example.shoplist.viewmodel.recipe.RecipeFilerViewModel
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -23,6 +27,18 @@ val retrofitModule = module {
     single<LoadingMealRepo> { LoadingMealRetrofitImpl(get<MealRetrofitService>()) }
 }
 
+val roomModule = module {
+    single<RecipesDatabase> {
+        Room.databaseBuilder(get(),RecipesDatabase::class.java, "recipes.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+    single<RecipesDao> { get<RecipesDatabase>().getDao() }
+    single<SavingFavoriteMealRepo> { FavoriteMealRoomImpl(get<RecipesDao>()) }
+    single<LoadingFavoritesMealRepo> { FavoriteMealRoomImpl(get<RecipesDao>()) }
+}
+
 val viewModelModule = module {
     factory<RecipeFilterController.BaseViewModel> { RecipeFilerViewModel(get<LoadingMealRepo>()) }
+    factory<FavoritesController.BaseViewModel> { FavoritesViewModel(get<LoadingFavoritesMealRepo>()) }
 }
