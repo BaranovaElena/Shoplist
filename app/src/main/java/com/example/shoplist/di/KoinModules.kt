@@ -8,6 +8,8 @@ import com.example.shoplist.domain.MealRetrofitService
 import com.example.shoplist.domain.favorites.*
 import com.example.shoplist.viewmodel.favorites.FavoritesController
 import com.example.shoplist.viewmodel.favorites.FavoritesViewModel
+import com.example.shoplist.viewmodel.mealitem.MealItemController
+import com.example.shoplist.viewmodel.mealitem.MealItemPresenter
 import com.example.shoplist.viewmodel.recipe.RecipeFilerViewModel
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -41,4 +43,7 @@ val roomModule = module {
 val viewModelModule = module {
     factory<RecipeFilterController.BaseViewModel> { RecipeFilerViewModel(get<LoadingMealRepo>()) }
     factory<FavoritesController.BaseViewModel> { FavoritesViewModel(get<LoadingFavoritesMealRepo>()) }
+    factory<MealItemController.Presenter> {
+        MealItemPresenter(get<SavingFavoriteMealRepo>(), get<LoadingFavoritesMealRepo>())
+    }
 }
