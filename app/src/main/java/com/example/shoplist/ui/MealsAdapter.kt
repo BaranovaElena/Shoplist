@@ -8,88 +8,77 @@ import com.bumptech.glide.Glide
 import com.example.shoplist.R
 import com.example.shoplist.data.MealShortEntity
 import com.example.shoplist.databinding.RecipeItemBinding
-import com.example.shoplist.domain.favorites.LoadingFavoritesMealRepo
-import com.example.shoplist.domain.favorites.SavingFavoriteMealRepo
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import org.koin.java.KoinJavaComponent.inject
+import com.example.shoplist.viewmodel.mealitem.MealItemController
+import com.example.shoplist.viewmodel.mealitem.MealItemPresenter
 
 class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
     private var list: List<MealShortEntity> = emptyList()
+    private var presenters: MutableList<MealItemController.Presenter> = mutableListOf()
     fun updateList(list: List<MealShortEntity>) {
         this.list = list
+        for (meal in list) {
+            presenters.add(MealItemPresenter())
+        }
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder =
         MealsViewHolder(parent)
     override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], presenters[position])
     }
     override fun getItemCount() = list.size
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        for (presenter in presenters) {
+            presenter.onDetached()
+        }
+        super.onDetachedFromRecyclerView(recyclerView)
+    }
 }
 
-class MealsViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
+class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent, false))
 {
     private val binding by viewBinding(RecipeItemBinding::bind)
-    private val savingRepo: SavingFavoriteMealRepo by inject(SavingFavoriteMealRepo::class.java)
-    private val gettingRepo: LoadingFavoritesMealRepo by inject(LoadingFavoritesMealRepo::class.java)
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    fun bind(meal: MealShortEntity) {
+    fun bind(meal: MealShortEntity, presenter: MealItemController.Presenter) {
+        presenter.onAttached(this)
         binding.recipeItemTitleTextView.text = meal.title
         Glide
             .with(itemView.context)
             .load(meal.imageUrl)
             .into(binding.recipeItemImageView)
 
-        setLikeButtonListener(meal)
-        setFavorite(meal)
+        setLikeButtonListener(meal, presenter)
+        presenter.onBound(meal)
     }
 
-    private fun setFavorite(meal: MealShortEntity) {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                try {
-                    gettingRepo.isMealExists(meal.id).collect { res ->
-                        if (res) {
-                            binding.recipeItemLikeButton.isSelected = true
-                            binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_full)
-                        } else {
-                            binding.recipeItemLikeButton.isSelected = false
-                            binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_border)
-                        }
-                    }
-                } catch (thr: Throwable) {
-
-                }
-            }
-        }
-    }
-
-    private fun setLikeButtonListener(meal: MealShortEntity) {
+    private fun setLikeButtonListener(
+        meal: MealShortEntity,
+        presenter: MealItemController.Presenter
+    ) {
         binding.recipeItemLikeButton.setOnClickListener {
             when (binding.recipeItemLikeButton.isSelected) {
                 false -> {
-                    binding.recipeItemLikeButton.isSelected = true
-                    scope.launch {
-                        withContext(Dispatchers.IO) {
-                            savingRepo.saveMeal(meal)
-                        }
-                    }
-                    binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_full)
+                    presenter.onLiked(meal)
+                    setLiked()
                 }
                 true -> {
-                    binding.recipeItemLikeButton.isSelected = false
-                    scope.launch {
-                        withContext(Dispatchers.IO) {
-                            savingRepo.deleteMeal(meal)
-                        }
-                    }
-                    binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_border)
+                    presenter.onDisliked(meal)
+                    setDisliked()
                 }
             }
         }
+    }
+
+    override fun setLiked() {
+        binding.recipeItemLikeButton.isSelected = true
+        binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_full)
+    }
+
+    override fun setDisliked() {
+        binding.recipeItemLikeButton.isSelected = false
+        binding.recipeItemLikeButton.setImageResource(R.drawable.ic_favorite_border)
     }
 }
