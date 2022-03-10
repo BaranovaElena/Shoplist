@@ -9,15 +9,17 @@ import com.example.shoplist.R
 import com.example.shoplist.data.MealShortEntity
 import com.example.shoplist.databinding.RecipeItemBinding
 import com.example.shoplist.viewmodel.mealitem.MealItemController
-import com.example.shoplist.viewmodel.mealitem.MealItemPresenter
+import org.koin.java.KoinJavaComponent.inject
 
 class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
     private var list: List<MealShortEntity> = emptyList()
     private var presenters: MutableList<MealItemController.Presenter> = mutableListOf()
+
     fun updateList(list: List<MealShortEntity>) {
         this.list = list
         for (meal in list) {
-            presenters.add(MealItemPresenter())
+            val p: MealItemController.Presenter by inject(MealItemController.Presenter::class.java)
+            presenters.add(p)
         }
         notifyDataSetChanged()
     }
