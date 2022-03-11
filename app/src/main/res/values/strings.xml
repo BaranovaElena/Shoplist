@@ -19,4 +19,6 @@
     <string name="theme_default">Standart</string>
     <string name="theme_indigo">Indigo</string>
     <string name="theme_orange">Orange</string>
+    <string name="detail_recipe_category_title_text">Category:</string>
+    <string name="detail_recipe_area_title_text">Area:</string>
 </resources>

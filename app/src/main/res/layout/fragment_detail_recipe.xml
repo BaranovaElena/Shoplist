@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".DetailRecipeFragment">
+
+    <ProgressBar
+        android:id="@+id/detail_recipe_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <TextView
         android:id="@+id/detail_recipe_title_text_view"
@@ -30,7 +41,7 @@
         android:autoLink="web"
         android:textAlignment="center" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/default_padding">
@@ -38,19 +49,16 @@
             android:id="@+id/detail_recipe_category_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAlignment="textStart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/detail_recipe_category_value_text_view"/>
+            android:text="@string/detail_recipe_category_title_text"
+            android:textAlignment="textStart"/>
         <TextView
             android:id="@+id/detail_recipe_category_value_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textAlignment="textEnd"
-            app:layout_constraintStart_toEndOf="@+id/detail_recipe_category_title_text_view"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textAlignment="textEnd"/>
+    </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/default_padding">
@@ -58,17 +66,16 @@
             android:id="@+id/detail_recipe_area_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textAlignment="textStart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/detail_recipe_area_value_text_view"/>
+            android:text="@string/detail_recipe_area_title_text"
+            android:textAlignment="textStart"/>
         <TextView
             android:id="@+id/detail_recipe_area_value_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textAlignment="textEnd"
             app:layout_constraintStart_toEndOf="@+id/detail_recipe_area_title_text_view"
             app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/detail_recipe_instructions_text_view"
@@ -81,5 +88,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/default_padding" />
-
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>
