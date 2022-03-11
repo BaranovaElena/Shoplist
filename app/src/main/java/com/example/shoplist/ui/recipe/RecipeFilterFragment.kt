@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
@@ -34,7 +35,8 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         defineListeners()
 
         binding.recipeFilterRecyclerView.adapter = recyclerAdapter
-        binding.recipeFilterRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.recipeFilterRecyclerView.layoutManager =
+            GridLayoutManager(context, resources.getInteger(R.integer.recipes_recycle_span_count))
     }
 
     private fun defineListeners() {

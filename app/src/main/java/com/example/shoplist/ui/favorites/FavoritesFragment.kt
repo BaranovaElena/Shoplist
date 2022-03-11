@@ -3,7 +3,7 @@ package com.example.shoplist.ui.favorites
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.data.LoadState
@@ -27,7 +27,8 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites), FavoritesContro
         super.onViewCreated(view, savedInstanceState)
 
         binding.favoritesRecyclerView.adapter = recyclerAdapter
-        binding.favoritesRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.favoritesRecyclerView.layoutManager =
+            GridLayoutManager(context, resources.getInteger(R.integer.recipes_recycle_span_count))
 
         model.loadStateLiveData.observe(viewLifecycleOwner) { renderMealsList(it) }
         model.onViewCreated()
