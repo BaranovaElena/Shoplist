@@ -17,7 +17,7 @@
     <style name="Theme.Shoplist.Indigo" parent="Theme.Shoplist">
         <item name="colorPrimary">@color/indigo_500</item>
         <item name="colorPrimaryVariant">@color/indigo_700</item>
-        <item name="colorOnPrimary">@color/indigo_200</item>
+        <item name="colorOnPrimary">@color/indigo_100</item>
         <item name="colorOnPrimarySurface">@color/indigo_300</item>
 
         <item name="colorSecondary">@color/deep_orange_500</item>
@@ -28,7 +28,7 @@
     <style name="Theme.Shoplist.Orange" parent="Theme.Shoplist">
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorPrimaryVariant">@color/orange_700</item>
-        <item name="colorOnPrimary">@color/orange_200</item>
+        <item name="colorOnPrimary">@color/orange_100</item>
         <item name="colorOnPrimarySurface">@color/orange_300</item>
 
         <item name="colorSecondary">@color/deep_purple_500</item>
