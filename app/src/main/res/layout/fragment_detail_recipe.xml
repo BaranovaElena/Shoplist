@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".DetailRecipeFragment">
+
+    <TextView
+        android:id="@+id/detail_recipe_title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textAlignment="center" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/recipe_item_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/recipe_item_image_height"
+        android:padding="@dimen/default_padding"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/detail_recipe_video_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding"
+        android:autoLink="web"
+        android:textAlignment="center" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding">
+        <TextView
+            android:id="@+id/detail_recipe_category_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/detail_recipe_category_value_text_view"/>
+        <TextView
+            android:id="@+id/detail_recipe_category_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toEndOf="@+id/detail_recipe_category_title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding">
+        <TextView
+            android:id="@+id/detail_recipe_area_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/detail_recipe_area_value_text_view"/>
+        <TextView
+            android:id="@+id/detail_recipe_area_value_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toEndOf="@+id/detail_recipe_area_title_text_view"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/detail_recipe_instructions_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/default_padding" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detail_recipe_ingredients_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding" />
+
+</LinearLayout>
