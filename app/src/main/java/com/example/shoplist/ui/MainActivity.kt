@@ -8,15 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.shoplist.ui.detail.DetailRecipeFragment
 import com.example.shoplist.R
 import com.example.shoplist.databinding.ActivityMainBinding
 import com.example.shoplist.ui.favorites.FavoritesFragment
+import com.example.shoplist.ui.recipe.RecipeFilterFragment
 import com.example.shoplist.ui.recipe.RecipesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val SHARED_PREFERENCES_NAME = "settings"
 
-class MainActivity : AppCompatActivity(), SettingsFragment.Controller {
+class MainActivity : AppCompatActivity(), SettingsFragment.Controller, FavoritesFragment.Contract, RecipeFilterFragment.Contract {
     private val binding by viewBinding(ActivityMainBinding::bind , R.id.activity_container)
     private val bottomNavigationView: BottomNavigationView by lazy { binding.bottomNavigationView }
     private lateinit var sharedPreferences: SharedPreferences
@@ -100,5 +102,9 @@ class MainActivity : AppCompatActivity(), SettingsFragment.Controller {
 
     override fun removeSettingsFragmentFromBackStack() {
         supportFragmentManager.popBackStack()
+    }
+
+    override fun openDetailScreen(mealId: Int) {
+        openFragment(DetailRecipeFragment.newInstance(mealId), true)
     }
 }

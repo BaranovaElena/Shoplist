@@ -1,15 +1,16 @@
-package com.example.shoplist
+package com.example.shoplist.ui.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bumptech.glide.Glide
+import com.example.shoplist.R
 import com.example.shoplist.data.DetailRecipeEntity
 import com.example.shoplist.data.Errors
 import com.example.shoplist.data.LoadState
 import com.example.shoplist.databinding.FragmentDetailRecipeBinding
-import com.example.shoplist.ui.SettingsFragment
 import com.example.shoplist.ui.showErrorMessage
 import com.example.shoplist.viewmodel.details.DetailsController
 import moxy.MvpAppCompatFragment
@@ -43,7 +44,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getInt(SettingsFragment.BUNDLE_EXTRA_KEY)?.let { id ->
+        arguments?.getInt(BUNDLE_EXTRA_KEY)?.let { id ->
             presenter.onViewCreated(id)
         }
     }
@@ -51,6 +52,10 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View{
     override fun showRecipe(recipe: DetailRecipeEntity) {
         binding.detailRecipeProgressBar.visibility = View.GONE
         binding.detailRecipeTitleTextView.text = recipe.title
+        Glide
+            .with(binding.recipeItemImageView.context)
+            .load(recipe.imageUrl)
+            .into(binding.recipeItemImageView)
         binding.detailRecipeAreaValueTextView.text = recipe.area
         binding.detailRecipeCategoryValueTextView.text = recipe.category
         binding.detailRecipeVideoTextView.text = recipe.videoUrl

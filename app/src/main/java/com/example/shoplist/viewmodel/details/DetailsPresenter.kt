@@ -22,7 +22,10 @@ class DetailsPresenter(
                 try {
                     val recipe = interactor.getDetailsById(id)
                     recipe?.let {
-                        viewState.showRecipe(recipe)
+                        withContext(Dispatchers.Main) {
+                            viewState.showRecipe(recipe)
+                        }
+
                     } ?: viewState.showError(Errors.SERVER_ERROR, null)
                 } catch (thr: Throwable) {
                     viewState.showError(Errors.SERVER_ERROR, thr.message)

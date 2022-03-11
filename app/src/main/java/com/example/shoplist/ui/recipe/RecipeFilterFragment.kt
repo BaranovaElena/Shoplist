@@ -6,12 +6,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.data.*
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.ui.MealsAdapter
+import com.example.shoplist.ui.favorites.FavoritesFragment
 import com.example.shoplist.ui.showErrorMessage
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
     private val model: RecipeFilterController.BaseViewModel by viewModel()
-    private val recyclerAdapter = MealsAdapter()
+    private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
 
     companion object {
         fun newInstance() = RecipeFilterFragment()
@@ -104,5 +104,13 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
             }
             is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
         }
+    }
+
+    private fun recyclerViewItemCallback(mealId: Int) {
+        (requireActivity() as FavoritesFragment.Contract).openDetailScreen(mealId)
+    }
+
+    interface Contract{
+        fun openDetailScreen(mealId: Int)
     }
 }
