@@ -1,9 +1,12 @@
 package com.example.shoplist.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.shoplist.R
@@ -21,6 +24,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View{
     private val binding by viewBinding(FragmentDetailRecipeBinding::bind)
     private val p: DetailsController.Presenter by inject()
     private val presenter by moxyPresenter { p }
+    private val adapter = IngredientsAdapter()
 
     companion object {
         private const val BUNDLE_EXTRA_KEY = "MEAL_ID_KEY"
@@ -47,6 +51,9 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View{
         arguments?.getInt(BUNDLE_EXTRA_KEY)?.let { id ->
             presenter.onViewCreated(id)
         }
+
+        binding.detailRecipeIngredientsRecyclerView.adapter = adapter
+        binding.detailRecipeIngredientsRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     override fun showRecipe(recipe: DetailRecipeEntity) {
@@ -58,8 +65,11 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View{
             .into(binding.recipeItemImageView)
         binding.detailRecipeAreaValueTextView.text = recipe.area
         binding.detailRecipeCategoryValueTextView.text = recipe.category
-        binding.detailRecipeVideoTextView.text = recipe.videoUrl
+        binding.detailRecipeVideoTextView.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(recipe.videoUrl)))
+        }
         binding.detailRecipeInstructionsTextView.text = recipe.instructions
+        adapter.updateData(recipe.ingredients)
     }
 
     override fun showLoading() {

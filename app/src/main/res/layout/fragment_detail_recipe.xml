@@ -20,6 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/detail_recipe_bottom_sheet_peek_height"
             android:orientation="vertical">
 
         <TextView
@@ -56,21 +57,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detail_recipe_category_title_text"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
 
                     <TextView
                         android:id="@+id/detail_recipe_category_value_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
-                        android:layout_gravity="center" />
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
 
                     <TextView
                         android:id="@+id/detail_recipe_area_title_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@string/detail_recipe_area_title_text" />
+                        android:text="@string/detail_recipe_area_title_text"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
 
                     <TextView
                         android:id="@+id/detail_recipe_area_value_text_view"
@@ -78,26 +82,29 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textStyle="bold"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/detail_recipe_area_title_text_view" />
+
+                    <TextView
+                        android:id="@+id/detail_recipe_video_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/detail_recipe_video_textview_text"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="bottom"
+                        android:textStyle="bold"
+                        android:textColor="?android:textColorLink"
+                        android:padding="@dimen/default_padding"
+                        android:textAlignment="center"/>
                 </LinearLayout>
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/detail_recipe_video_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:padding="@dimen/default_padding"
-                android:textAlignment="center" />
-
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/detail_recipe_ingredients_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="@dimen/default_padding" />
         </LinearLayout>
 
