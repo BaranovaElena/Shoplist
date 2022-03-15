@@ -5,7 +5,12 @@ import com.example.shoplist.BuildConfig
 import com.example.shoplist.domain.LoadingMealRepo
 import com.example.shoplist.domain.LoadingMealRetrofitImpl
 import com.example.shoplist.domain.MealRetrofitService
+import com.example.shoplist.domain.details.LoadingDetailsRepo
+import com.example.shoplist.domain.details.LoadingDetailsRetrofitRepo
 import com.example.shoplist.domain.favorites.*
+import com.example.shoplist.viewmodel.details.DetailsController
+import com.example.shoplist.viewmodel.details.DetailsInteractor
+import com.example.shoplist.viewmodel.details.DetailsPresenter
 import com.example.shoplist.viewmodel.favorites.FavoritesController
 import com.example.shoplist.viewmodel.favorites.FavoritesViewModel
 import com.example.shoplist.viewmodel.mealitem.MealItemController
@@ -27,6 +32,7 @@ val retrofitModule = module {
     }
     single<MealRetrofitService> { get<Retrofit>().create(MealRetrofitService::class.java) }
     single<LoadingMealRepo> { LoadingMealRetrofitImpl(get<MealRetrofitService>()) }
+    single<LoadingDetailsRepo> { LoadingDetailsRetrofitRepo(get<MealRetrofitService>()) }
 }
 
 val roomModule = module {
@@ -46,4 +52,5 @@ val viewModelModule = module {
     factory<MealItemController.Presenter> {
         MealItemPresenter(get<SavingFavoriteMealRepo>(), get<LoadingFavoritesMealRepo>())
     }
+    factory<DetailsController.Presenter> { DetailsPresenter(DetailsInteractor(get<LoadingDetailsRepo>())) }
 }

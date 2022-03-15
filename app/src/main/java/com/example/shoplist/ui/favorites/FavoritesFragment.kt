@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites), FavoritesController.View {
     private val binding by viewBinding(FragmentFavoritesBinding::bind)
-    private val recyclerAdapter = MealsAdapter()
+    private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
     private val model: FavoritesController.BaseViewModel by viewModel()
 
     companion object {
@@ -44,5 +44,13 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites), FavoritesContro
             }
             is LoadState.Loading -> {}
         }
+    }
+
+    private fun recyclerViewItemCallback(mealId: Int) {
+        (requireActivity() as Contract).openDetailScreen(mealId)
+    }
+
+    interface Contract{
+        fun openDetailScreen(mealId: Int)
     }
 }

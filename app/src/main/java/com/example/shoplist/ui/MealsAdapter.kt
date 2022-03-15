@@ -11,7 +11,7 @@ import com.example.shoplist.databinding.RecipeItemBinding
 import com.example.shoplist.viewmodel.mealitem.MealItemController
 import org.koin.java.KoinJavaComponent.inject
 
-class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
+class MealsAdapter(private val itemClickCallback: (Int) -> Unit) : RecyclerView.Adapter<MealsViewHolder>() {
     private var list: List<MealShortEntity> = emptyList()
     private var presenters: MutableList<MealItemController.Presenter> = mutableListOf()
 
@@ -27,7 +27,7 @@ class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder =
         MealsViewHolder(parent)
     override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
-        holder.bind(list[position], presenters[position])
+        holder.bind(list[position], presenters[position], itemClickCallback)
     }
     override fun getItemCount() = list.size
 
@@ -44,16 +44,22 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
 {
     private val binding by viewBinding(RecipeItemBinding::bind)
 
-    fun bind(meal: MealShortEntity, presenter: MealItemController.Presenter) {
+    fun bind(
+        meal: MealShortEntity,
+        presenter: MealItemController.Presenter,
+        itemClickCallback: (Int) -> Unit
+    ) {
         presenter.onAttached(this)
         binding.recipeItemTitleTextView.text = meal.title
         Glide
-            .with(itemView.context)
+            .with(binding.recipeItemTitleTextView.context)
             .load(meal.imageUrl)
             .into(binding.recipeItemImageView)
 
         setLikeButtonListener(meal, presenter)
         presenter.onBound(meal)
+
+        itemView.setOnClickListener { itemClickCallback(meal.id) }
     }
 
     private fun setLikeButtonListener(

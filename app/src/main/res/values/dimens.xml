@@ -7,8 +7,10 @@
     <dimen name="recipe_item_like_button_size">27dp</dimen>
     <dimen name="settings_theme_title_text_size">24sp</dimen>
     <dimen name="min_margin">3dp</dimen>
+    <dimen name="min_padding">3dp</dimen>
     <dimen name="recipe_item_card_margin">@dimen/min_margin</dimen>
-    <dimen name="recipe_item_image_height">180dp</dimen>
+    <dimen name="recipe_item_image_height">220dp</dimen>
+    <dimen name="detail_recipe_bottom_sheet_peek_height">70dp</dimen>
     <integer name="recipe_item_title_text_view_max_size">2</integer>
     <integer name="recipes_recycle_span_count">2</integer>
 </resources>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.detail.DetailRecipeFragment">
+
+    <ProgressBar
+        android:id="@+id/detail_recipe_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/detail_recipe_bottom_sheet_peek_height"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/detail_recipe_title_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding"
+            android:textAlignment="center"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/default_padding">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/recipe_item_image_view"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="@dimen/recipe_item_image_height"
+                    android:padding="@dimen/default_padding"
+                    android:scaleType="center" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="@dimen/default_padding"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/detail_recipe_category_title_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_recipe_category_title_text"
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
+
+                    <TextView
+                        android:id="@+id/detail_recipe_category_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
+
+                    <TextView
+                        android:id="@+id/detail_recipe_area_title_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/detail_recipe_area_title_text"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"/>
+
+                    <TextView
+                        android:id="@+id/detail_recipe_area_value_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/detail_recipe_area_title_text_view" />
+
+                    <TextView
+                        android:id="@+id/detail_recipe_video_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/detail_recipe_video_textview_text"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="bottom"
+                        android:textStyle="bold"
+                        android:textColor="?android:textColorLink"
+                        android:padding="@dimen/default_padding"
+                        android:textAlignment="center"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detail_recipe_ingredients_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/default_padding" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/bottom_sheet_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorOnPrimarySurface"
+            android:padding="@dimen/default_padding"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="@dimen/detail_recipe_bottom_sheet_peek_height"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <TextView
+                android:id="@+id/detail_recipe_instructions_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
