@@ -1,7 +1,6 @@
 package com.example.shoplist.di
 
 import androidx.room.Room
-import com.example.shoplist.BuildConfig
 import com.example.shoplist.domain.LoadingMealRepo
 import com.example.shoplist.domain.LoadingMealRetrofitImpl
 import com.example.shoplist.domain.MealRetrofitService
@@ -22,10 +21,12 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
+
 val retrofitModule = module {
     single<Retrofit> {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
