@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/recipe_item_card_margin"
+    android:layout_margin="@dimen/min_margin"
     app:strokeWidth="1dp"
     app:strokeColor="@color/card_stroke_color"
     app:cardElevation="0dp"
@@ -24,12 +24,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/recipe_item_text_padding">
+            android:padding="@dimen/large_padding">
             <TextView
                 android:id="@+id/recipe_item_title_text_view"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/recipe_item_title_text_size"
+                android:textSize="@dimen/medium_text_size"
                 android:maxLines="@integer/recipe_item_title_text_view_max_size"
                 android:ellipsize="end"
                 android:textAppearance="?attr/textAppearanceHeadline6"
