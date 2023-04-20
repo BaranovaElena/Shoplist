@@ -12,6 +12,7 @@ private const val FILTER_URL = "filter.php?"
 private const val CATEGORIES_URL = "list.php?c=list"
 private const val AREAS_URL = "list.php?a=list"
 private const val DETAILS_URL = "lookup.php?"
+private const val SEARCH_URL = "search.php?"
 
 interface MealRetrofitService {
     @GET(FILTER_URL)
@@ -24,4 +25,6 @@ interface MealRetrofitService {
     fun getAreas(): Deferred<AreasEntity>
     @GET(DETAILS_URL)
     fun getDetails(@Query("i") id: Int): Deferred<DetailRecipesEntity>
+    @GET(SEARCH_URL)
+    fun getMealBySearch(@Query("s") name: String): Deferred<MealsEntity>
 }

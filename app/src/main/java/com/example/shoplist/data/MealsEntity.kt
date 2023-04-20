@@ -25,5 +25,5 @@ data class MealShortEntity(
 
 @Parcelize
 data class MealsEntity(
-    val meals: List<MealShortEntity> = emptyList()
+    val meals: List<MealShortEntity>? = emptyList()
 ):Parcelable

@@ -6,7 +6,11 @@ import com.example.shoplist.domain.LoadingMealRetrofitImpl
 import com.example.shoplist.domain.MealRetrofitService
 import com.example.shoplist.domain.details.LoadingDetailsRepo
 import com.example.shoplist.domain.details.LoadingDetailsRetrofitRepo
-import com.example.shoplist.domain.favorites.*
+import com.example.shoplist.domain.favorites.FavoriteMealRoomImpl
+import com.example.shoplist.domain.favorites.LoadingFavoritesMealRepo
+import com.example.shoplist.domain.favorites.RecipesDao
+import com.example.shoplist.domain.favorites.RecipesDatabase
+import com.example.shoplist.domain.favorites.SavingFavoriteMealRepo
 import com.example.shoplist.viewmodel.details.DetailsController
 import com.example.shoplist.viewmodel.details.DetailsInteractor
 import com.example.shoplist.viewmodel.details.DetailsPresenter
@@ -16,6 +20,8 @@ import com.example.shoplist.viewmodel.mealitem.MealItemController
 import com.example.shoplist.viewmodel.mealitem.MealItemPresenter
 import com.example.shoplist.viewmodel.recipe.RecipeFilerViewModel
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
+import com.example.shoplist.viewmodel.recipe.RecipeSearchViewModel
+import com.example.shoplist.viewmodel.recipe.RecipeSearchViewModelImpl
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -54,4 +60,5 @@ val viewModelModule = module {
         MealItemPresenter(get<SavingFavoriteMealRepo>(), get<LoadingFavoritesMealRepo>())
     }
     factory<DetailsController.Presenter> { DetailsPresenter(DetailsInteractor(get<LoadingDetailsRepo>())) }
+    factory<RecipeSearchViewModel> { RecipeSearchViewModelImpl(get<LoadingMealRepo>()) }
 }

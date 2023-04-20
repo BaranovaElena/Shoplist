@@ -20,4 +20,8 @@ class LoadingMealRetrofitImpl(private val service: MealRetrofitService) : Loadin
     override suspend fun getAreas(): AreasEntity {
         return service.getAreas().await()
     }
+
+    override suspend fun getMealsBySearch(name: String): MealsEntity {
+        return service.getMealBySearch(name).await()
+    }
 }

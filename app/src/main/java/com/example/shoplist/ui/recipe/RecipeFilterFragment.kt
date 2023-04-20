@@ -8,10 +8,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
-import com.example.shoplist.data.*
+import com.example.shoplist.data.AreasEntity
+import com.example.shoplist.data.CategoriesEntity
+import com.example.shoplist.data.Filters
+import com.example.shoplist.data.LoadState
+import com.example.shoplist.data.MealsEntity
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.ui.MealsAdapter
 import com.example.shoplist.ui.favorites.FavoritesFragment
+import com.example.shoplist.ui.setVisibility
 import com.example.shoplist.ui.showErrorMessage
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -56,16 +61,11 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
     }
 
     override fun renderFilterLoadState(state: LoadState<Any>) {
+        binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
         when (state) {
-            is LoadState.Success -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                fillSpinner(state)
-            }
-            is LoadState.Error -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                showErrorMessage(requireContext(), state)
-            }
-            is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
+            is LoadState.Success -> fillSpinner(state)
+            is LoadState.Error -> showErrorMessage(requireContext(), state)
+            is LoadState.Loading -> {}
         }
     }
 
@@ -96,7 +96,7 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         when (state) {
             is LoadState.Success<MealsEntity> -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
-                recyclerAdapter.updateList(state.value.meals)
+                state.value.meals?.let(recyclerAdapter::updateList)
             }
             is LoadState.Error -> {
                 binding.recipeFilterProgressBar.visibility = View.GONE
