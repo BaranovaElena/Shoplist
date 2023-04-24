@@ -1,6 +1,7 @@
 package com.example.shoplist.ui
 
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import com.example.shoplist.R
 import com.example.shoplist.data.Errors
@@ -21,4 +22,9 @@ fun showErrorMessage(context: Context, error: LoadState.Error) {
 
 enum class Themes {
     DEFAULT, INDIGO, ORANGE
+}
+
+fun View.setVisibility(isVisible: Boolean) {
+    if (isVisible) this.visibility = View.VISIBLE
+    else this.visibility = View.GONE
 }

@@ -16,12 +16,12 @@ import com.example.shoplist.data.MealsEntity
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.ui.MealsAdapter
 import com.example.shoplist.ui.favorites.FavoritesFragment
+import com.example.shoplist.ui.setVisibility
 import com.example.shoplist.ui.showErrorMessage
 import com.example.shoplist.viewmodel.recipe.RecipeFilterController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter),
-    RecipeFilterController.View {
+class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
     private val model: RecipeFilterController.BaseViewModel by viewModel()
     private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
@@ -50,39 +50,25 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter),
         }
     }
 
-    override fun renderFilterLoadState(state: LoadState<Any>) =
-        with(binding.recipeFilterProgressBar) {
-            when (state) {
-                is LoadState.Success -> {
-                    visibility = View.GONE
-                    fillSpinner(state)
-                }
-                is LoadState.Error -> {
-                    visibility = View.GONE
-                    showErrorMessage(requireContext(), state)
-                }
-                is LoadState.Loading -> {
-                    visibility = View.VISIBLE
-                }
-            }
+    override fun renderFilterLoadState(state: LoadState<Any>) {
+        binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
+        when (state) {
+            is LoadState.Success -> fillSpinner(state)
+            is LoadState.Error -> showErrorMessage(requireContext(), state)
+            is LoadState.Loading -> {}
         }
+    }
 
-    override fun renderMealsLoadState(state: LoadState<MealsEntity>) =
-        with(binding.recipeFilterProgressBar) {
-            when (state) {
-                is LoadState.Success<MealsEntity> -> {
-                    visibility = View.GONE
-                    recyclerAdapter.updateList(state.value.meals)
-                }
-                is LoadState.Error -> {
-                    visibility = View.GONE
-                    showErrorMessage(requireContext(), state)
-                }
-                is LoadState.Loading -> {
-                    visibility = View.VISIBLE
-                }
+    override fun renderMealsLoadState(state: LoadState<MealsEntity>) {
+        binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
+        when (state) {
+            is LoadState.Success<MealsEntity> -> {
+                state.value.meals?.let(recyclerAdapter::updateList)
             }
+            is LoadState.Error -> showErrorMessage(requireContext(), state)
+            is LoadState.Loading -> {}
         }
+    }
 
     private fun defineListeners() = with(binding) {
         recipeFilterChipGroup.setOnCheckedChangeListener { _, checkedId ->
