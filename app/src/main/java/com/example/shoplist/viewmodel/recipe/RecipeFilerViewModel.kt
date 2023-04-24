@@ -1,8 +1,16 @@
 package com.example.shoplist.viewmodel.recipe
 
-import com.example.shoplist.data.*
+import com.example.shoplist.data.Errors
+import com.example.shoplist.data.Filters
+import com.example.shoplist.data.LoadState
 import com.example.shoplist.domain.LoadingMealRepo
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterController.BaseViewModel() {
     private var currentFilter: Filters? = null
@@ -24,6 +32,11 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
             currentFilter = filter
             getDataList(filter)
         }
+    }
+
+    override fun onFilterValueSelected(filterValue: String) {
+        mealsLoadStateLiveDataMutable.postValue(LoadState.Loading)
+        currentFilter?.let { getMeals(it, filterValue) }
     }
 
     private fun getDataList(filter: Filters) {
@@ -59,11 +72,6 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
                 LoadState.Error(Errors.SERVER_ERROR, thr.message)
             }
         )
-    }
-
-    override fun onFilterValueSelected(filterValue: String) {
-        mealsLoadStateLiveDataMutable.postValue(LoadState.Loading)
-        currentFilter?.let { getMeals(it, filterValue) }
     }
 
     private fun getMeals(filter: Filters, filterValue: String) {

@@ -26,37 +26,27 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
     private val model: RecipeFilterController.BaseViewModel by viewModel()
     private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
 
-    companion object {
-        fun newInstance() = RecipeFilterFragment()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.categoriesLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
-        model.areasLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
-        model.mealsLoadStateLiveData.observe(viewLifecycleOwner) { renderMealsLoadState(it)}
+        with(model) {
+            categoriesLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
+            areasLoadStateLiveData.observe(viewLifecycleOwner) { renderFilterLoadState(it) }
+            mealsLoadStateLiveData.observe(viewLifecycleOwner) { renderMealsLoadState(it) }
+        }
 
         defineListeners()
 
-        binding.recipeFilterRecyclerView.adapter = recyclerAdapter
-        binding.recipeFilterRecyclerView.layoutManager =
-            GridLayoutManager(context, resources.getInteger(R.integer.recipes_recycle_span_count))
-    }
-
-    private fun defineListeners() {
-        binding.recipeFilterChipGroup.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.recipe_filter_chip_category -> { model.onChipChecked(Filters.CATEGORY) }
-                R.id.recipe_filter_chip_area -> { model.onChipChecked(Filters.AREA) }
-            }
+        binding.recipeFilterRecyclerView.apply {
+            adapter = recyclerAdapter
+            layoutManager = GridLayoutManager(
+                context,
+                resources.getInteger(R.integer.recipes_recycle_span_count)
+            )
         }
 
-        binding.recipeFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                model.onFilterValueSelected(parent?.getItemAtPosition(position).toString())
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        binding.recipeFilterChipGroup.apply {
+            check(getChildAt(0).id)
         }
     }
 
@@ -66,6 +56,42 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
             is LoadState.Success -> fillSpinner(state)
             is LoadState.Error -> showErrorMessage(requireContext(), state)
             is LoadState.Loading -> {}
+        }
+    }
+
+    override fun renderMealsLoadState(state: LoadState<MealsEntity>) {
+        binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
+        when (state) {
+            is LoadState.Success<MealsEntity> -> {
+                state.value.meals?.let(recyclerAdapter::updateList)
+            }
+            is LoadState.Error -> showErrorMessage(requireContext(), state)
+            is LoadState.Loading -> {}
+        }
+    }
+
+    private fun defineListeners() = with(binding) {
+        recipeFilterChipGroup.setOnCheckedChangeListener { _, checkedId ->
+            model.onChipChecked(
+                when (checkedId) {
+                    R.id.recipe_filter_chip_category -> Filters.CATEGORY
+                    R.id.recipe_filter_chip_area -> Filters.AREA
+                    else -> Filters.CATEGORY
+                }
+            )
+        }
+
+        recipeFilterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                model.onFilterValueSelected(parent?.getItemAtPosition(position).toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
@@ -83,26 +109,13 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
                 }
             }
         }
-        val adapter = ArrayAdapter(
+
+        binding.recipeFilterSpinner.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
             valuesArray
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.recipeFilterSpinner.adapter = adapter
-    }
-
-    override fun renderMealsLoadState(state: LoadState<MealsEntity>) {
-        when (state) {
-            is LoadState.Success<MealsEntity> -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                state.value.meals?.let(recyclerAdapter::updateList)
-            }
-            is LoadState.Error -> {
-                binding.recipeFilterProgressBar.visibility = View.GONE
-                showErrorMessage(requireContext(), state)
-            }
-            is LoadState.Loading -> { binding.recipeFilterProgressBar.visibility = View.VISIBLE }
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
     }
 
@@ -110,7 +123,11 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         (requireActivity() as FavoritesFragment.Contract).openDetailScreen(mealId)
     }
 
-    interface Contract{
+    interface Contract {
         fun openDetailScreen(mealId: Int)
+    }
+
+    companion object {
+        fun newInstance() = RecipeFilterFragment()
     }
 }
