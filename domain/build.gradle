@@ -31,7 +31,9 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'com.google.code.gson:gson:2.8.7'
-    implementation 'androidx.room:room-common:2.5.1'
+    implementation(libs.androidx.ktx)
+    implementation(libs.gson)
+
+    //room need refactor to data_local module
+    implementation(libs.room.common)
 }
