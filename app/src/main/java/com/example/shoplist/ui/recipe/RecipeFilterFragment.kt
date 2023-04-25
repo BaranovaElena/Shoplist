@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
-import com.example.shoplist.data.AreasEntity
-import com.example.shoplist.data.CategoriesEntity
-import com.example.shoplist.data.Filters
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.data.MealsEntity
+import com.example.shoplist.domain.models.MealsEntity
 import com.example.shoplist.databinding.FragmentRecipeFilterBinding
+import com.example.shoplist.domain.models.AreasEntity
+import com.example.shoplist.domain.models.CategoriesEntity
+import com.example.shoplist.domain.models.Filters
 import com.example.shoplist.ui.MealsAdapter
 import com.example.shoplist.ui.favorites.FavoritesFragment
 import com.example.shoplist.ui.setVisibility

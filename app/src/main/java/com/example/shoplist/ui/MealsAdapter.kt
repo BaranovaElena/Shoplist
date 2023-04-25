@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.shoplist.R
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 import com.example.shoplist.databinding.RecipeItemBinding
 import com.example.shoplist.viewmodel.mealitem.MealItemController
 import org.koin.java.KoinJavaComponent.inject

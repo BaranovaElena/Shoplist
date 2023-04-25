@@ -1,6 +1,6 @@
 package com.example.shoplist.domain.favorites
 
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

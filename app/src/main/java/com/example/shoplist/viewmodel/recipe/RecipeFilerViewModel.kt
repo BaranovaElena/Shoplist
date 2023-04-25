@@ -1,9 +1,9 @@
 package com.example.shoplist.viewmodel.recipe
 
 import com.example.shoplist.data.Errors
-import com.example.shoplist.data.Filters
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.domain.LoadingMealRepo
+import com.example.shoplist.domain.models.Filters
+import com.example.shoplist.domain.repos.LoadingMealRepo
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

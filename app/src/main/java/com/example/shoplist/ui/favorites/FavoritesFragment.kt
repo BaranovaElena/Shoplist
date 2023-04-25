@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 import com.example.shoplist.databinding.FragmentFavoritesBinding
 import com.example.shoplist.ui.MealsAdapter
 import com.example.shoplist.ui.showErrorMessage

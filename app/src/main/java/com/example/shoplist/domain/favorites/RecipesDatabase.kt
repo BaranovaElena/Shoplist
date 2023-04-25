@@ -1,8 +1,7 @@
 package com.example.shoplist.domain.favorites
 
 import androidx.room.*
-import com.example.shoplist.data.MealShortEntity
-import kotlinx.coroutines.Deferred
+import com.example.shoplist.domain.models.MealShortEntity
 
 @Database(entities = [MealShortEntity::class], version = 1)
 abstract class RecipesDatabase : RoomDatabase() {

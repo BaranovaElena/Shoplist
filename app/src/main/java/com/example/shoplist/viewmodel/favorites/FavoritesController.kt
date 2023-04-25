@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 
 class FavoritesController {
     interface View {

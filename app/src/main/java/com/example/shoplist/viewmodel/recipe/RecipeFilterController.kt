@@ -3,11 +3,11 @@ package com.example.shoplist.viewmodel.recipe
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.shoplist.data.AreasEntity
-import com.example.shoplist.data.CategoriesEntity
-import com.example.shoplist.data.Filters
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.data.MealsEntity
+import com.example.shoplist.domain.models.AreasEntity
+import com.example.shoplist.domain.models.CategoriesEntity
+import com.example.shoplist.domain.models.Filters
+import com.example.shoplist.domain.models.MealsEntity
 
 class RecipeFilterController {
     interface View {

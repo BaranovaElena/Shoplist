@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.shoplist.data.Errors
 import com.example.shoplist.data.LoadState
-import com.example.shoplist.data.MealsEntity
-import com.example.shoplist.domain.LoadingMealRepo
+import com.example.shoplist.domain.models.MealsEntity
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +21,7 @@ abstract class RecipeSearchViewModel : ViewModel() {
 }
 
 class RecipeSearchViewModelImpl(
-    private val repo: LoadingMealRepo,
+    private val repo: com.example.shoplist.domain.repos.LoadingMealRepo,
 ) : RecipeSearchViewModel() {
 
     override val loadState = MutableLiveData<LoadState<MealsEntity>>()

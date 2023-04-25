@@ -1,6 +1,6 @@
 package com.example.shoplist.viewmodel.mealitem
 
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 
 class MealItemController {
     interface View {

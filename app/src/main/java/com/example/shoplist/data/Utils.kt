@@ -6,10 +6,6 @@ sealed class LoadState<out T: Any> {
     object Loading : LoadState<Nothing>()
 }
 
-enum class Filters {
-    CATEGORY, AREA
-}
-
 enum class Errors {
     SERVER_ERROR, LOAD_ERROR
 }

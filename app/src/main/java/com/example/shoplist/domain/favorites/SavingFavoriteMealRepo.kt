@@ -1,6 +1,6 @@
 package com.example.shoplist.domain.favorites
 
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 
 interface SavingFavoriteMealRepo {
     suspend fun saveMeal(meal: MealShortEntity)

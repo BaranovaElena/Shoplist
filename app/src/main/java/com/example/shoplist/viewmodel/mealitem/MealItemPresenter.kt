@@ -1,6 +1,6 @@
 package com.example.shoplist.viewmodel.mealitem
 
-import com.example.shoplist.data.MealShortEntity
+import com.example.shoplist.domain.models.MealShortEntity
 import com.example.shoplist.domain.favorites.LoadingFavoritesMealRepo
 import com.example.shoplist.domain.favorites.SavingFavoriteMealRepo
 import kotlinx.coroutines.*
