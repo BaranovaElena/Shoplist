@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_recipe_category_title_text">Category:</string>
+    <string name="detail_recipe_area_title_text">Area:</string>
+    <string name="detail_recipe_video_textview_text">Watch on Youtube</string>
+    <string name="detail_recipe_add_button_text">Add all ingredients to shoplist</string>
+    <string name="item_ingredient_add_button_text">Add to shoplist</string>
+</resources>

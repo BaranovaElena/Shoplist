@@ -8,18 +8,26 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.shoplist.ui.detail.DetailRecipeFragment
 import com.example.shoplist.R
 import com.example.shoplist.databinding.ActivityMainBinding
-import com.example.shoplist.ui.favorites.FavoritesFragment
-import com.example.shoplist.ui.recipe.RecipeFilterFragment
-import com.example.shoplist.ui.recipe.RecipesFragment
+import com.example.shoplist.feature_detail_recipe.ui.DetailRecipeFragment
+import com.example.shoplist.feature_favorites.ui.FavoritesFragment
+import com.example.shoplist.feature_meal_item.ui.MealsViewHolder
+import com.example.shoplist.feature_recipes.ui.RecipeFilterFragment
+import com.example.shoplist.feature_recipes.ui.RecipesFragment
+import com.example.shoplist.feature_settings.models.Themes
+import com.example.shoplist.feature_settings.ui.SettingsFragment
+import com.example.shoplist.feature_shoplist.ui.ShoplistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 private const val SHARED_PREFERENCES_NAME = "settings"
 
-class MainActivity : AppCompatActivity(), SettingsFragment.Controller, FavoritesFragment.Contract, RecipeFilterFragment.Contract {
-    private val binding by viewBinding(ActivityMainBinding::bind , R.id.activity_container)
+class MainActivity : AppCompatActivity(),
+    SettingsFragment.Controller,
+    MealsViewHolder.Contract,
+    RecipeFilterFragment.Contract {
+
+    private val binding by viewBinding(ActivityMainBinding::bind, R.id.activity_container)
     private val bottomNavigationView: BottomNavigationView by lazy { binding.bottomNavigationView }
     private lateinit var sharedPreferences: SharedPreferences
     private val sharedValueNameTheme = "Theme"
@@ -34,8 +42,10 @@ class MainActivity : AppCompatActivity(), SettingsFragment.Controller, Favorites
         }
         setContentView(R.layout.activity_main)
 
-        bottomNavigationView.setOnItemSelectedListener { item -> setNavigation(item) }
-        bottomNavigationView.selectedItemId = R.id.nav_recipes
+        bottomNavigationView.apply {
+            setOnItemSelectedListener { item -> setNavigation(item) }
+            selectedItemId = R.id.nav_recipes
+        }
     }
 
     private fun setNavigation(item: MenuItem): Boolean {
@@ -48,16 +58,16 @@ class MainActivity : AppCompatActivity(), SettingsFragment.Controller, Favorites
     }
 
     private fun openFragment(fragmentInstance: Fragment, backstack: Boolean) {
-        if (backstack) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragmentInstance)
-                .addToBackStack(null)
-                .commit()
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragmentInstance)
-                .commitNow()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container, fragmentInstance)
+            if (backstack) {
+                addToBackStack(null)
+                commit()
+            } else {
+                commitNow()
+            }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,7 +76,7 @@ class MainActivity : AppCompatActivity(), SettingsFragment.Controller, Favorites
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             R.id.app_bar_settings -> {
                 openFragment(SettingsFragment.newInstance(currentTheme), true)
                 true

@@ -5,32 +5,5 @@
     <string name="nav_recipes">Recipes</string>
     <string name="nav_favorites">Favorites</string>
 
-    <string name="shoplist_button_add_text">add</string>
-    <string name="shoplist_button_clear_text">clear all</string>
-
-    <string name="recipe_filter_chip_category_text">Category</string>
-    <string name="recipe_filter_chip_area_text">Area</string>
-
-    <string name="recipe_tab_filter">Find by filter</string>
-    <string name="recipe_tab_search">Find by search</string>
-
-    <string name="server_error_message">Server error</string>
-    <string name="load_error_message">Load error</string>
-
     <string name="nav_settings_title">Settings</string>
-    <string name="settings_theme_title_text">Choose the application theme:</string>
-    <string name="theme_default">Standart</string>
-    <string name="theme_indigo">Indigo</string>
-    <string name="theme_orange">Orange</string>
-
-    <string name="detail_recipe_category_title_text">Category:</string>
-    <string name="detail_recipe_area_title_text">Area:</string>
-    <string name="detail_recipe_video_textview_text">Watch on Youtube</string>
-    <string name="detail_recipe_add_button_text">Add all ingredients to shoplist</string>
-    <string name="item_ingredient_add_button_text">Add to shoplist</string>
-
-    <string name="recipe_search_input_layout_hint">Enter recipe\'s name</string>
-    <string name="recipe_search_input_layout_helper">Use only english name</string>
-    <string name="recipe_search_btn_text">Search</string>
-    <string name="recipe_search_empty_text">No recipes found \n with this name 😢</string>
 </resources>

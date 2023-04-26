@@ -1,0 +1,43 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'com.example.shoplist.data_remote'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    //koin
+    implementation(libs.koin.core)
+
+    //retrofit
+    implementation(libs.retrofit2.core)
+    implementation(libs.retrofit2.gson)
+    implementation(libs.retrofit2.coroutines)
+    implementation(libs.kotlin.reflect)
+
+    implementation project(':domain')
+}

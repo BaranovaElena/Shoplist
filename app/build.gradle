@@ -1,20 +1,18 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
 }
 
 Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.shoplist"
-        minSdk 23
-        targetSdk 31
+        minSdk 24
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -46,43 +44,31 @@ android {
 
 dependencies {
     //binding
-    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.2'
-
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.google.code.gson:gson:2.8.7'
-    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
-
-    //mvvm
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation(libs.viewbinding.delegate)
 
     //koin
-    implementation "io.insert-koin:koin-core:3.1.3"
-    implementation "io.insert-koin:koin-android:3.1.3"
-
-    //glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-
-    //room
-    implementation 'androidx.room:room-runtime:2.4.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt 'androidx.room:room-compiler:2.4.2'
-    implementation 'androidx.room:room-ktx:2.4.2'
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 
     //moxy
-    implementation "com.github.moxy-community:moxy:2.2.2"
-    kapt "com.github.moxy-community:moxy-compiler:2.2.2"
-    implementation "com.github.moxy-community:moxy-android:2.2.2"
-    implementation "com.github.moxy-community:moxy-app-compat:2.2.2"
-    implementation "com.github.moxy-community:moxy-ktx:2.2.2"
+    implementation(libs.moxy.appcompat)
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //androidx
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraint)
+
+    //material
+    implementation(libs.android.material)
+
+    implementation project(':feature_detail_recipe')
+    implementation project(':feature_recipes')
+    implementation project(':feature_meal_item')
+    implementation project(':feature_favorites')
+    implementation project(':feature_settings')
+    implementation project(':feature_shoplist')
+    implementation project(':data_remote')
+    implementation project(':data_local')
+    implementation project(':domain')
+    implementation project(':Core')
 }

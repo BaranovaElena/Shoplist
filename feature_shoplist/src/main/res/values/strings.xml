@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shoplist_button_add_text">add</string>
+    <string name="shoplist_button_clear_text">clear all</string>
+</resources>

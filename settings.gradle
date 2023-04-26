@@ -1,3 +1,5 @@
+enableFeaturePreview("VERSION_CATALOGS")
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -6,5 +8,16 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
+
 rootProject.name = "Shoplist"
 include ':app'
+include ':Core'
+include ':feature_detail_recipe'
+include ':domain'
+include ':data_remote'
+include ':feature_recipes'
+include ':feature_meal_item'
+include ':feature_favorites'
+include ':data_local'
+include ':feature_settings'
+include ':feature_shoplist'
