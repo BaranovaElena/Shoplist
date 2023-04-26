@@ -1,8 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-parcelize'
-    id 'kotlin-kapt'
 }
 
 Properties localProperties = new Properties()
@@ -48,43 +46,27 @@ dependencies {
     //binding
     implementation(libs.viewbinding.delegate)
 
-    //retrofit
-    implementation(libs.retrofit2.core)
-    implementation(libs.retrofit2.gson)
-    implementation(libs.gson)
-    implementation(libs.retrofit2.coroutines)
-
     //koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
-    //glide
-    implementation(libs.glide)
-
-    //room
-    implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
-    implementation(libs.room.ktx)
-
     //moxy
-    implementation(libs.moxy.core)
-    implementation(libs.moxy.android)
     implementation(libs.moxy.appcompat)
-    implementation(libs.moxy.ktx)
-    kapt(libs.moxy.compiler)
 
     //androidx
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraint)
-    implementation(libs.androidx.livedata)
-    implementation(libs.androidx.viewmodel)
 
     //material
     implementation(libs.android.material)
 
     implementation project(':feature_detail_recipe')
+    implementation project(':feature_recipes')
+    implementation project(':feature_meal_item')
+    implementation project(':feature_favorites')
     implementation project(':data_remote')
+    implementation project(':data_local')
     implementation project(':domain')
     implementation project(':Core')
 }

@@ -1,0 +1,54 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.feature_meal_item'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 33
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures{
+        viewBinding true
+    }
+}
+
+dependencies {
+    //binding
+    implementation(libs.viewbinding.delegate)
+
+    //koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    //glide
+    implementation(libs.glide)
+
+    //androidx
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+
+    //material
+    implementation(libs.android.material)
+
+    implementation project(':domain')
+    implementation project(':Core')
+}

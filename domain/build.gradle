@@ -31,7 +31,5 @@ android {
 dependencies {
 
     implementation(libs.androidx.ktx)
-
-    //room need refactor to data_local module
-    implementation(libs.room.common)
+    implementation(libs.kotlinx.coroutines)
 }

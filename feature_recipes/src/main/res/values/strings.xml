@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="recipe_tab_filter">Find by filter</string>
+    <string name="recipe_tab_search">Find by search</string>
+
+    <string name="recipe_filter_chip_category_text">Category</string>
+    <string name="recipe_filter_chip_area_text">Area</string>
+
+    <string name="recipe_search_input_layout_hint">Enter recipe\'s name</string>
+    <string name="recipe_search_input_layout_helper">Use only english name</string>
+    <string name="recipe_search_btn_text">Search</string>
+    <string name="recipe_search_empty_text">No recipes found \n with this name 😢</string>
+</resources>
