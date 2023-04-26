@@ -1,9 +1,9 @@
 package com.example.shoplist.data_remote.api
 
-import com.example.shoplist.domain.models.AreasEntity
-import com.example.shoplist.domain.models.CategoriesEntity
-import com.example.shoplist.domain.models.DetailRecipesEntity
-import com.example.shoplist.domain.models.MealsEntity
+import com.example.shoplist.data_remote.models.AreasEntityResponse
+import com.example.shoplist.data_remote.models.CategoriesEntityResponse
+import com.example.shoplist.data_remote.models.DetailRecipesEntityResponse
+import com.example.shoplist.data_remote.models.MealsEntityResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,15 +16,15 @@ private const val SEARCH_URL = "search.php?"
 
 interface MealRetrofitService {
     @GET(FILTER_URL)
-    fun getMealByFilterCategory(@Query("c") category: String): Deferred<MealsEntity>
+    fun getMealByFilterCategory(@Query("c") category: String): Deferred<MealsEntityResponse>
     @GET(FILTER_URL)
-    fun getMealByFilterArea(@Query("a") area: String): Deferred<MealsEntity>
+    fun getMealByFilterArea(@Query("a") area: String): Deferred<MealsEntityResponse>
     @GET(CATEGORIES_URL)
-    fun getCategories(): Deferred<CategoriesEntity>
+    fun getCategories(): Deferred<CategoriesEntityResponse>
     @GET(AREAS_URL)
-    fun getAreas(): Deferred<AreasEntity>
+    fun getAreas(): Deferred<AreasEntityResponse>
     @GET(DETAILS_URL)
-    fun getDetails(@Query("i") id: Int): Deferred<DetailRecipesEntity>
+    fun getDetails(@Query("i") id: Int): Deferred<DetailRecipesEntityResponse>
     @GET(SEARCH_URL)
-    fun getMealBySearch(@Query("s") name: String): Deferred<MealsEntity>
+    fun getMealBySearch(@Query("s") name: String): Deferred<MealsEntityResponse>
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -36,6 +37,7 @@ dependencies {
     implementation(libs.retrofit2.core)
     implementation(libs.retrofit2.gson)
     implementation(libs.retrofit2.coroutines)
+    implementation(libs.kotlin.reflect)
 
     implementation project(':domain')
 }

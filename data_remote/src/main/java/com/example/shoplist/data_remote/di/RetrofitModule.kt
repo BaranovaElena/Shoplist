@@ -1,6 +1,10 @@
 package com.example.shoplist.data_remote.di
 
 import com.example.shoplist.data_remote.api.MealRetrofitService
+import com.example.shoplist.data_remote.mappers.AreasMapper
+import com.example.shoplist.data_remote.mappers.CategoriesMapper
+import com.example.shoplist.data_remote.mappers.DetailRecipeMapper
+import com.example.shoplist.data_remote.mappers.MealsMapper
 import com.example.shoplist.data_remote.repos.LoadingDetailsRetrofitRepo
 import com.example.shoplist.data_remote.repos.LoadingMealRetrofitImpl
 import com.example.shoplist.domain.repos.LoadingDetailsRepo
@@ -21,6 +25,23 @@ val retrofitModule = module {
             .build()
     }
     single<MealRetrofitService> { get<Retrofit>().create(MealRetrofitService::class.java) }
-    single<LoadingMealRepo> { LoadingMealRetrofitImpl(get<MealRetrofitService>()) }
-    single<LoadingDetailsRepo> {LoadingDetailsRetrofitRepo(get<MealRetrofitService>()) }
+
+    factory { AreasMapper() }
+    factory { CategoriesMapper() }
+    factory { MealsMapper() }
+    single<LoadingMealRepo> {
+        LoadingMealRetrofitImpl(
+            get<MealRetrofitService>(),
+            get<AreasMapper>(),
+            get<CategoriesMapper>(),
+            get<MealsMapper>())
+    }
+
+    factory { DetailRecipeMapper() }
+    single<LoadingDetailsRepo> {
+        LoadingDetailsRetrofitRepo(
+            get<MealRetrofitService>(),
+            get<DetailRecipeMapper>()
+        )
+    }
 }
