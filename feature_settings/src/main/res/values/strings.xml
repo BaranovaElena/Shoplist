@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_theme_title_text">Choose the application theme:</string>
+    <string name="theme_default">Standart</string>
+    <string name="theme_indigo">Indigo</string>
+    <string name="theme_orange">Orange</string>
+</resources>

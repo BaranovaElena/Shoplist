@@ -24,12 +24,12 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
             FragmentFactory(getString(R.string.recipe_tab_search)) { RecipeSearchFragment.newInstance() }
         )
 
-        with(binding.weatherViewPager) {
-            adapter = RecipeViewPagerAdapter(requireActivity(), fragments)
-        }
+        with(binding) {
+            weatherViewPager.adapter = RecipeViewPagerAdapter(requireActivity(), fragments)
 
-        TabLayoutMediator(binding.weatherTabLayout, binding.weatherViewPager) { tab, pos ->
-            tab.text = fragments[pos].title
-        }.attach()
+            TabLayoutMediator(weatherTabLayout, weatherViewPager) { tab, pos ->
+                tab.text = fragments[pos].title
+            }.attach()
+        }
     }
 }

@@ -5,12 +5,5 @@
     <string name="nav_recipes">Recipes</string>
     <string name="nav_favorites">Favorites</string>
 
-    <string name="shoplist_button_add_text">add</string>
-    <string name="shoplist_button_clear_text">clear all</string>
-
     <string name="nav_settings_title">Settings</string>
-    <string name="settings_theme_title_text">Choose the application theme:</string>
-    <string name="theme_default">Standart</string>
-    <string name="theme_indigo">Indigo</string>
-    <string name="theme_orange">Orange</string>
 </resources>

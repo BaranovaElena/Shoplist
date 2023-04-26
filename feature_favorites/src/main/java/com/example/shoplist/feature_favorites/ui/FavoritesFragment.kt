@@ -27,12 +27,18 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites), FavoritesContro
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.favoritesRecyclerView.adapter = recyclerAdapter
-        binding.favoritesRecyclerView.layoutManager =
-            GridLayoutManager(context, resources.getInteger(R.integer.recipes_recycle_span_count))
+        binding.favoritesRecyclerView.apply {
+            adapter = recyclerAdapter
+            layoutManager = GridLayoutManager(
+                context,
+                resources.getInteger(R.integer.recipes_recycle_span_count)
+            )
+        }
 
-        model.loadStateLiveData.observe(viewLifecycleOwner) { renderMealsList(it) }
-        model.onViewCreated()
+        with(model) {
+            loadStateLiveData.observe(viewLifecycleOwner) { renderMealsList(it) }
+            onViewCreated()
+        }
     }
 
     override fun renderMealsList(state: LoadState<List<MealShortEntity>>) {

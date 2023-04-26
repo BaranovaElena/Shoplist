@@ -65,6 +65,8 @@ dependencies {
     implementation project(':feature_recipes')
     implementation project(':feature_meal_item')
     implementation project(':feature_favorites')
+    implementation project(':feature_settings')
+    implementation project(':feature_shoplist')
     implementation project(':data_remote')
     implementation project(':data_local')
     implementation project(':domain')

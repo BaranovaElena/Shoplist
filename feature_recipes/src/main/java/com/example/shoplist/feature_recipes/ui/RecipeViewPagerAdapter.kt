@@ -6,7 +6,9 @@ import com.example.shoplist.core.ui.FragmentFactory
 
 class RecipeViewPagerAdapter(
     fragmentActivity: FragmentActivity,
-    private val fragments: List<FragmentFactory> = emptyList()): FragmentStateAdapter(fragmentActivity)  {
+    private val fragments: List<FragmentFactory> = emptyList()
+) : FragmentStateAdapter(fragmentActivity) {
+
     override fun getItemCount() = fragments.size
     override fun createFragment(position: Int) = fragments[position].factoryMethod()
 }
