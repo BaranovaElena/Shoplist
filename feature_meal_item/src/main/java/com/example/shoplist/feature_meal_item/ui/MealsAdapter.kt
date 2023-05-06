@@ -30,9 +30,11 @@ class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder =
         MealsViewHolder(parent)
+
     override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
         holder.bind(list[position], presenters[position])
     }
+
     override fun getItemCount() = list.size
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
@@ -55,29 +57,27 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
     ) {
         presenter.onAttached(this)
         binding.recipeItemTitleTextView.text = meal.title
-        Glide
-            .with(itemView.context)
-            .load(meal.imageUrl)
-            .listener(
-                GlideLoadListener(
-                    onLoadingComplete = {
-                        itemView.setOnClickListener {
-                            router.navigateTo(DetailRecipeScreen(meal.id))
-                        }
-                    },
-                    onLoadingFail = {
-                        itemView.setOnClickListener {
-                            router.navigateTo(DetailRecipeScreen(meal.id))
-                        }
-                        binding.recipeItemErrorTextView.visibility = View.VISIBLE
-                    }
-                )
-            )
-            .into(binding.recipeItemImageView)
-
+        loadImage(meal)
         setLikeButtonListener(meal, presenter)
         presenter.onBound(meal)
     }
+
+    private fun loadImage(meal: MealShortEntity) = Glide
+        .with(itemView.context)
+        .load(meal.imageUrl)
+        .listener(
+            GlideLoadListener(
+                onLoadingComplete = {
+                    itemView.setOnClickListener {
+                        router.navigateTo(DetailRecipeScreen(meal.id))
+                    }
+                },
+                onLoadingFail = {
+                    binding.recipeItemErrorTextView.visibility = View.VISIBLE
+                }
+            )
+        )
+        .into(binding.recipeItemImageView)
 
     private fun setLikeButtonListener(
         meal: MealShortEntity,
@@ -102,7 +102,7 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
         setImageResource(R.drawable.ic_favorite_full)
     }
 
-    override fun setDisliked() = with(binding.recipeItemLikeButton){
+    override fun setDisliked() = with(binding.recipeItemLikeButton) {
         isSelected = false
         setImageResource(R.drawable.ic_favorite_border)
     }
