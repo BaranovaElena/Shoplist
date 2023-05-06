@@ -29,14 +29,14 @@ class DetailsPresenter(
             withContext(Dispatchers.IO) {
                 try {
                     val recipe = interactor.getDetailsById(id)
-                    recipe?.let {
-                        withContext(Dispatchers.Main) {
-                            viewState.showRecipe(recipe)
-                        }
-
-                    } ?: viewState.showError(Errors.SERVER_ERROR, null)
+                    withContext(Dispatchers.Main) {
+                        recipe?.let { viewState.showRecipe(recipe) }
+                            ?: viewState.showError(Errors.SERVER_ERROR, null)
+                    }
                 } catch (thr: Throwable) {
-                    viewState.showError(Errors.SERVER_ERROR, thr.message)
+                    withContext(Dispatchers.Main) {
+                        viewState.showError(Errors.SERVER_ERROR, thr.message)
+                    }
                 }
             }
         }
