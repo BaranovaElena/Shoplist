@@ -20,7 +20,7 @@ class RecipeSearchFragment : Fragment(R.layout.fragment_recipe_search) {
 
     private val binding by viewBinding(FragmentRecipeSearchBinding::bind)
     private val model: RecipeSearchViewModel by viewModel()
-    private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
+    private val recyclerAdapter = MealsAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,10 +58,6 @@ class RecipeSearchFragment : Fragment(R.layout.fragment_recipe_search) {
             is LoadState.Error -> showErrorMessage(requireContext(), state.errorType, state.message)
             is LoadState.Loading -> {}
         }
-    }
-
-    private fun recyclerViewItemCallback(mealId: Int) {
-        (requireActivity() as MealsViewHolder.Contract).openDetailScreen(mealId)
     }
 
     companion object {

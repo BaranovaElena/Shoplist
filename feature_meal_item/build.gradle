@@ -35,6 +35,9 @@ dependencies {
     //binding
     implementation(libs.viewbinding.delegate)
 
+    //navigation
+    implementation(libs.cicerone)
+
     //koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
@@ -51,4 +54,5 @@ dependencies {
 
     implementation project(':domain')
     implementation project(':Core')
+    implementation project(':feature_detail_recipe')
 }

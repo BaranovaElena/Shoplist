@@ -39,6 +39,9 @@ dependencies {
     //binding
     implementation(libs.viewbinding.delegate)
 
+    //navigation
+    implementation(libs.cicerone)
+
     //moxy
     implementation(libs.moxy.core)
     implementation(libs.moxy.android)

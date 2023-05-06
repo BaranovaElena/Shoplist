@@ -6,26 +6,29 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.R
 import com.example.shoplist.databinding.ActivityMainBinding
-import com.example.shoplist.feature_detail_recipe.ui.DetailRecipeFragment
-import com.example.shoplist.feature_favorites.ui.FavoritesFragment
-import com.example.shoplist.feature_meal_item.ui.MealsViewHolder
-import com.example.shoplist.feature_recipes.ui.RecipeFilterFragment
-import com.example.shoplist.feature_recipes.ui.RecipesFragment
+import com.example.shoplist.feature_favorites.navigation.FavoritesScreen
+import com.example.shoplist.feature_recipes.navigation.RecipesScreen
 import com.example.shoplist.feature_settings.models.Themes
+import com.example.shoplist.feature_settings.navigation.SettingsScreen
 import com.example.shoplist.feature_settings.ui.SettingsFragment
-import com.example.shoplist.feature_shoplist.ui.ShoplistFragment
+import com.example.shoplist.feature_shoplist.navigation.ShoplistScreen
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import org.koin.android.ext.android.inject
 
 private const val SHARED_PREFERENCES_NAME = "settings"
 
 class MainActivity : AppCompatActivity(),
-    SettingsFragment.Controller,
-    MealsViewHolder.Contract,
-    RecipeFilterFragment.Contract {
+    SettingsFragment.Controller {
+
+    private val navigator by lazy { AppNavigator(this, R.id.container) }
+    private val router: Router by inject()
+    private val navigatorHolder: NavigatorHolder by inject()
 
     private val binding by viewBinding(ActivityMainBinding::bind, R.id.activity_container)
     private val bottomNavigationView: BottomNavigationView by lazy { binding.bottomNavigationView }
@@ -48,26 +51,26 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    private fun setNavigation(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_shop_list -> openFragment(ShoplistFragment.newInstance(), false)
-            R.id.nav_recipes -> openFragment(RecipesFragment.newInstance(), false)
-            R.id.nav_favorites -> openFragment(FavoritesFragment.newInstance(), false)
-        }
-        return true
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        navigatorHolder.setNavigator(navigator)
     }
 
-    private fun openFragment(fragmentInstance: Fragment, backstack: Boolean) {
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragmentInstance)
-            if (backstack) {
-                addToBackStack(null)
-                commit()
-            } else {
-                commitNow()
-            }
-        }
+    override fun onPause() {
+        navigatorHolder.removeNavigator()
+        super.onPause()
+    }
 
+    private fun setNavigation(item: MenuItem): Boolean {
+        router.newRootScreen(
+            when (item.itemId) {
+                R.id.nav_shop_list -> ShoplistScreen()
+                R.id.nav_recipes -> RecipesScreen()
+                R.id.nav_favorites -> FavoritesScreen()
+                else -> RecipesScreen()
+            }
+        )
+        return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.app_bar_settings -> {
-                openFragment(SettingsFragment.newInstance(currentTheme), true)
+                router.navigateTo(SettingsScreen(currentTheme))
                 true
             }
             else -> false
@@ -112,9 +115,5 @@ class MainActivity : AppCompatActivity(),
 
     override fun removeSettingsFragmentFromBackStack() {
         supportFragmentManager.popBackStack()
-    }
-
-    override fun openDetailScreen(mealId: Int) {
-        openFragment(DetailRecipeFragment.newInstance(mealId), true)
     }
 }

@@ -15,6 +15,7 @@ room = "2.5.1"
 moxy = "2.2.2"
 reflect = "1.8.10"
 coroutines = "1.6.4"
+cicerone = "7.1"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -49,3 +50,5 @@ moxy-ktx = { group = "com.github.moxy-community", name = "moxy-ktx", version.ref
 
 kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "reflect" }
 kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+
+cicerone = { group = "com.github.terrakok", name = "cicerone", version.ref = "cicerone" }

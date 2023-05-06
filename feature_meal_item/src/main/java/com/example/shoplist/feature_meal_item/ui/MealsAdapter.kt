@@ -8,10 +8,12 @@ import com.bumptech.glide.Glide
 import com.example.feature_meal_item.R
 import com.example.feature_meal_item.databinding.RecipeItemBinding
 import com.example.shoplist.domain.models.MealShortEntity
+import com.example.shoplist.feature_detail_recipe.navigation.DetailRecipeScreen
 import com.example.shoplist.feature_meal_item.viewModel.MealItemController
+import com.github.terrakok.cicerone.Router
 import org.koin.java.KoinJavaComponent.inject
 
-class MealsAdapter(private val itemClickCallback: (Int) -> Unit) : RecyclerView.Adapter<MealsViewHolder>() {
+class MealsAdapter : RecyclerView.Adapter<MealsViewHolder>() {
     private var list: List<MealShortEntity> = emptyList()
     private var presenters: MutableList<MealItemController.Presenter> = mutableListOf()
 
@@ -27,7 +29,7 @@ class MealsAdapter(private val itemClickCallback: (Int) -> Unit) : RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder =
         MealsViewHolder(parent)
     override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
-        holder.bind(list[position], presenters[position], itemClickCallback)
+        holder.bind(list[position], presenters[position])
     }
     override fun getItemCount() = list.size
 
@@ -40,14 +42,14 @@ class MealsAdapter(private val itemClickCallback: (Int) -> Unit) : RecyclerView.
 }
 
 class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent, false))
-{
+    LayoutInflater.from(parent.context).inflate(R.layout.recipe_item, parent, false)
+) {
     private val binding by viewBinding(RecipeItemBinding::bind)
+    private val router: Router by inject(Router::class.java)
 
     fun bind(
         meal: MealShortEntity,
         presenter: MealItemController.Presenter,
-        itemClickCallback: (Int) -> Unit
     ) {
         presenter.onAttached(this)
         binding.recipeItemTitleTextView.text = meal.title
@@ -59,7 +61,9 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
         setLikeButtonListener(meal, presenter)
         presenter.onBound(meal)
 
-        itemView.setOnClickListener { itemClickCallback(meal.id) }
+        itemView.setOnClickListener {
+            router.navigateTo(DetailRecipeScreen(meal.id))
+        }
     }
 
     private fun setLikeButtonListener(
@@ -88,9 +92,5 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
     override fun setDisliked() = with(binding.recipeItemLikeButton){
         isSelected = false
         setImageResource(R.drawable.ic_favorite_border)
-    }
-
-    interface Contract{
-        fun openDetailScreen(mealId: Int)
     }
 }
