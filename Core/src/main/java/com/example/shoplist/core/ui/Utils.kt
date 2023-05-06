@@ -15,7 +15,7 @@ fun showErrorMessage(context: Context, errorType: Errors, errorMessage: String? 
                 Errors.LOAD_ERROR -> { R.string.load_error_message }
             }
         ),
-        Toast.LENGTH_SHORT
+        Toast.LENGTH_LONG
     ).show()
 }
 

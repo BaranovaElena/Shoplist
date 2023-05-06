@@ -56,6 +56,7 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
         Glide
             .with(binding.recipeItemTitleTextView.context)
             .load(meal.imageUrl)
+            .error(R.drawable.image_placeholder)
             .into(binding.recipeItemImageView)
 
         setLikeButtonListener(meal, presenter)

@@ -11,7 +11,7 @@ class DetailsController {
     interface View: MvpView{
         @AddToEndSingle
         fun showRecipe(recipe: DetailRecipeEntity)
-        @Skip
+        @AddToEndSingle
         fun showLoading()
         @Skip
         fun showError(errorType: Errors, message: String?)

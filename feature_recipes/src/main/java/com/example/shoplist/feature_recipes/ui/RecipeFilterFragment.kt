@@ -17,12 +17,12 @@ import com.example.shoplist.feature_meal_item.ui.MealsAdapter
 import com.example.shoplist.feature_recipes.R
 import com.example.shoplist.feature_recipes.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.feature_recipes.models.LoadState
-import com.example.shoplist.feature_recipes.viewModel.RecipeFilterController
+import com.example.shoplist.feature_recipes.viewModel.RecipeFilerViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
+class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter) {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
-    private val model: RecipeFilterController.BaseViewModel by viewModel()
+    private val model: RecipeFilerViewModel by viewModel()
     private val recyclerAdapter = MealsAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,8 +49,8 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         }
     }
 
-    override fun renderFilterLoadState(state: LoadState<Any>) {
-        binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
+    private fun renderFilterLoadState(state: LoadState<Any>) {
+        binding.recipeFilterProgressBar.setVisibility(state !is LoadState.Error)
         when (state) {
             is LoadState.Success -> fillSpinner(state)
             is LoadState.Error -> showErrorMessage(requireContext(), state.errorType, state.message)
@@ -58,7 +58,7 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         }
     }
 
-    override fun renderMealsLoadState(state: LoadState<MealsEntity>) {
+    private fun renderMealsLoadState(state: LoadState<MealsEntity>) {
         binding.recipeFilterProgressBar.setVisibility(state is LoadState.Loading)
         when (state) {
             is LoadState.Success<MealsEntity> -> {

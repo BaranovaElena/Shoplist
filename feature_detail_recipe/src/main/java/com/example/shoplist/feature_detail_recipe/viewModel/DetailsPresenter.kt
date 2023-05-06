@@ -11,11 +11,13 @@ import kotlinx.coroutines.withContext
 
 class DetailsPresenter(
     private val interactor: DetailsController.Interactor
-    ) : DetailsController.Presenter() {
-    private val scope =
-        CoroutineScope(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, thr ->
+) : DetailsController.Presenter() {
+
+    private val scope = CoroutineScope(
+        Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, thr ->
             viewState.showError(Errors.LOAD_ERROR, thr.message)
-        })
+        }
+    )
 
     override fun onViewCreated(mealId: Int) {
         viewState.showLoading()
