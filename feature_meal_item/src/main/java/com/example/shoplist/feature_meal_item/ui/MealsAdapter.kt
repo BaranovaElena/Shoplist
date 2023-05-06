@@ -1,12 +1,14 @@
 package com.example.shoplist.feature_meal_item.ui
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.feature_meal_item.R
 import com.example.feature_meal_item.databinding.RecipeItemBinding
+import com.example.shoplist.core.ui.GlideLoadListener
 import com.example.shoplist.domain.models.MealShortEntity
 import com.example.shoplist.feature_detail_recipe.navigation.DetailRecipeScreen
 import com.example.shoplist.feature_meal_item.viewModel.MealItemController
@@ -54,16 +56,27 @@ class MealsViewHolder(parent: ViewGroup) : MealItemController.View, RecyclerView
         presenter.onAttached(this)
         binding.recipeItemTitleTextView.text = meal.title
         Glide
-            .with(binding.recipeItemTitleTextView.context)
+            .with(itemView.context)
             .load(meal.imageUrl)
+            .listener(
+                GlideLoadListener(
+                    onLoadingComplete = {
+                        itemView.setOnClickListener {
+                            router.navigateTo(DetailRecipeScreen(meal.id))
+                        }
+                    },
+                    onLoadingFail = {
+                        itemView.setOnClickListener {
+                            router.navigateTo(DetailRecipeScreen(meal.id))
+                        }
+                        binding.recipeItemErrorTextView.visibility = View.VISIBLE
+                    }
+                )
+            )
             .into(binding.recipeItemImageView)
 
         setLikeButtonListener(meal, presenter)
         presenter.onBound(meal)
-
-        itemView.setOnClickListener {
-            router.navigateTo(DetailRecipeScreen(meal.id))
-        }
     }
 
     private fun setLikeButtonListener(

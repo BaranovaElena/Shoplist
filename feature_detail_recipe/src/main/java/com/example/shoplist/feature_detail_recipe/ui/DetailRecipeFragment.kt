@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.feature_detail_recipe.R
 import com.example.shoplist.domain.models.DetailRecipeEntity
@@ -63,11 +64,20 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
 
     override fun showRecipe(recipe: DetailRecipeEntity) = with(binding) {
         detailRecipeProgressBar.visibility = View.GONE
+        detailRecipeContainer.visibility = View.VISIBLE
         detailRecipeTitleTextView.text = recipe.title
+
         Glide
-            .with(recipeItemImageView.context)
+            .with(detailRecipeImageView.context)
             .load(recipe.imageUrl)
-            .into(recipeItemImageView)
+            .error(R.drawable.image_placeholder)
+            .transform(
+                RoundedCorners(
+                    resources.getDimensionPixelSize(R.dimen.recipe_item_image_corner_radius)
+                )
+            )
+            .into(detailRecipeImageView)
+
         detailRecipeAreaValueTextView.text = recipe.area
         detailRecipeCategoryValueTextView.text = recipe.category
         detailRecipeVideoTextView.setOnClickListener {
@@ -77,8 +87,9 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         ingredientsAdapter.updateData(recipe.ingredients)
     }
 
-    override fun showLoading() {
-        binding.detailRecipeProgressBar.visibility = View.VISIBLE
+    override fun showLoading() = with(binding) {
+        detailRecipeProgressBar.visibility = View.VISIBLE
+        detailRecipeContainer.visibility = View.GONE
     }
 
     override fun showError(errorType: Errors, message: String?) {

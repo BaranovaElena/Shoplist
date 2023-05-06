@@ -1,7 +1,13 @@
 package com.example.shoplist.feature_recipes.viewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.shoplist.domain.models.AreasEntity
+import com.example.shoplist.domain.models.CategoriesEntity
 import com.example.shoplist.domain.models.Errors
 import com.example.shoplist.domain.models.Filters
+import com.example.shoplist.domain.models.MealsEntity
 import com.example.shoplist.domain.repos.LoadingMealRepo
 import com.example.shoplist.feature_recipes.models.LoadState
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -12,19 +18,34 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterController.BaseViewModel() {
+abstract class RecipeFilerViewModel: ViewModel() {
+    abstract val mealsLoadStateLiveData: LiveData<LoadState<MealsEntity>>
+    abstract val categoriesLoadStateLiveData: LiveData<LoadState<CategoriesEntity>>
+    abstract val areasLoadStateLiveData: LiveData<LoadState<AreasEntity>>
+
+    abstract fun onChipChecked(filter: Filters)
+    abstract fun onFilterValueSelected(filterValue: String)
+}
+
+class RecipeFilerViewModelImpl(
+    private val repo: LoadingMealRepo,
+): RecipeFilerViewModel() {
+
+    override val mealsLoadStateLiveData = MutableLiveData<LoadState<MealsEntity>>()
+    override val categoriesLoadStateLiveData = MutableLiveData<LoadState<CategoriesEntity>>()
+    override val areasLoadStateLiveData = MutableLiveData<LoadState<AreasEntity>>()
     private var currentFilter: Filters? = null
     private val categoryScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, thr ->
-            categoriesLoadStateLiveDataMutable.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
+            categoriesLoadStateLiveData.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
         })
     private val areaScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, thr ->
-            areasLoadStateLiveDataMutable.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
+            areasLoadStateLiveData.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
         })
     private val mealScope =
         CoroutineScope(Dispatchers.Main + SupervisorJob() + CoroutineExceptionHandler { _, thr ->
-            mealsLoadStateLiveDataMutable.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
+            mealsLoadStateLiveData.postValue(LoadState.Error(Errors.LOAD_ERROR, thr.message))
     })
 
     override fun onChipChecked(filter: Filters) {
@@ -35,14 +56,20 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
     }
 
     override fun onFilterValueSelected(filterValue: String) {
-        mealsLoadStateLiveDataMutable.postValue(LoadState.Loading)
+        mealsLoadStateLiveData.postValue(LoadState.Loading)
         currentFilter?.let { getMeals(it, filterValue) }
     }
 
     private fun getDataList(filter: Filters) {
         val scope = when (filter) {
-            Filters.CATEGORY -> categoryScope
-            Filters.AREA -> areaScope
+            Filters.CATEGORY -> {
+                categoriesLoadStateLiveData.postValue(LoadState.Loading)
+                categoryScope
+            }
+            Filters.AREA -> {
+                areasLoadStateLiveData.postValue(LoadState.Loading)
+                areaScope
+            }
         }
         scope.launch {
             withContext(Dispatchers.IO) {
@@ -55,7 +82,7 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
     }
 
     private suspend fun getAreas() {
-        areasLoadStateLiveDataMutable.postValue(
+        areasLoadStateLiveData.postValue(
             try {
                 LoadState.Success(repo.getAreas())
             } catch (thr: Throwable) {
@@ -65,7 +92,7 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
     }
 
     private suspend fun getCategories() {
-        categoriesLoadStateLiveDataMutable.postValue(
+        categoriesLoadStateLiveData.postValue(
             try {
                 LoadState.Success(repo.getCategories())
             } catch (thr: Throwable) {
@@ -77,7 +104,7 @@ class RecipeFilerViewModel(private val repo: LoadingMealRepo): RecipeFilterContr
     private fun getMeals(filter: Filters, filterValue: String) {
         mealScope.launch {
             withContext(Dispatchers.IO) {
-                mealsLoadStateLiveDataMutable.postValue(
+                mealsLoadStateLiveData.postValue(
                     try {
                         LoadState.Success(repo.getMealsByFilter(filter, filterValue))
                     } catch (thr: Throwable) {
