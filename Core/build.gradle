@@ -31,6 +31,8 @@ android {
 dependencies {
 
     implementation(libs.androidx.fragment)
+    implementation(libs.koin.core)
+    implementation(libs.cicerone)
 
     implementation project(':domain')
 }

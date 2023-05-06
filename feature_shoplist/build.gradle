@@ -33,8 +33,11 @@ android {
 }
 
 dependencies {
-//binding
+    //binding
     implementation(libs.viewbinding.delegate)
+
+    //navigation
+    implementation(libs.cicerone)
 
     //androidx
     implementation(libs.androidx.ktx)

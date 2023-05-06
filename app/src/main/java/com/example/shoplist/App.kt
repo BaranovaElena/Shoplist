@@ -1,6 +1,7 @@
 package com.example.shoplist
 
 import android.app.Application
+import com.example.shoplist.core.navigation.navigationModule
 import com.example.shoplist.data_local.di.roomModule
 import com.example.shoplist.data_remote.di.retrofitModule
 import com.example.shoplist.feature_detail_recipe.di.detailRecipeModule
@@ -22,6 +23,7 @@ class App : Application() {
                 favoritesModule,
                 mealItemModule,
                 recipesModule,
+                navigationModule,
             )
         }
     }

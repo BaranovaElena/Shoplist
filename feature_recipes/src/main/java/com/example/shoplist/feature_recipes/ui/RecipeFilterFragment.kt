@@ -14,7 +14,6 @@ import com.example.shoplist.domain.models.AreasEntity
 import com.example.shoplist.domain.models.CategoriesEntity
 import com.example.shoplist.domain.models.Filters
 import com.example.shoplist.feature_meal_item.ui.MealsAdapter
-import com.example.shoplist.feature_meal_item.ui.MealsViewHolder
 import com.example.shoplist.feature_recipes.R
 import com.example.shoplist.feature_recipes.databinding.FragmentRecipeFilterBinding
 import com.example.shoplist.feature_recipes.models.LoadState
@@ -24,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFilterController.View {
     private val binding by viewBinding(FragmentRecipeFilterBinding::bind)
     private val model: RecipeFilterController.BaseViewModel by viewModel()
-    private val recyclerAdapter = MealsAdapter(::recyclerViewItemCallback)
+    private val recyclerAdapter = MealsAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,14 +116,6 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter), RecipeFi
         ).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
-    }
-
-    private fun recyclerViewItemCallback(mealId: Int) {
-        (requireActivity() as MealsViewHolder.Contract).openDetailScreen(mealId)
-    }
-
-    interface Contract {
-        fun openDetailScreen(mealId: Int)
     }
 
     companion object {
