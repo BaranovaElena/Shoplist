@@ -3,6 +3,7 @@ package com.example.shoplist.feature_detail_recipe.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,19 +27,8 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
     private val binding by viewBinding(FragmentDetailRecipeBinding::bind)
     private val p: DetailsController.Presenter by inject()
     private val presenter by moxyPresenter { p }
-    private val ingredientsAdapter = IngredientsAdapter()
-
-    companion object {
-        private const val BUNDLE_EXTRA_KEY = "MEAL_ID_KEY"
-
-        fun newInstance(mealId: Int): DetailRecipeFragment {
-            val fragment = DetailRecipeFragment()
-            val args = Bundle()
-            args.putInt(BUNDLE_EXTRA_KEY, mealId)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private val ingredientsAdapter = IngredientsAdapter(::addIngredientToShoplist)
+    private val ingredients: MutableMap<Pair<String, String>, Boolean> = mutableMapOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,9 +50,18 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         }
 
         setBottomSheetAnimation()
+
+        binding.detailRecipeAddAllButton.setOnClickListener {
+            ingredientsAdapter.setAllIngredientsReady()
+            addAllToShoplist()
+        }
     }
 
     override fun showRecipe(recipe: DetailRecipeEntity) = with(binding) {
+        recipe.ingredients.forEach {
+            ingredients[it.toPair()] = false
+        }
+
         detailRecipeProgressBar.visibility = View.GONE
         detailRecipeContainer.visibility = View.VISIBLE
         detailRecipeTitleTextView.text = recipe.title
@@ -106,4 +105,23 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
                 binding.detailRecipeBottomsheetArrow.rotation = slideOffset * 180
             }
         })
+
+    private fun addIngredientToShoplist(ingredient: Pair<String, String>) {
+        Log.d("@@@", "add ${ingredient.first} to base")
+        ingredients[ingredient] = true
+    }
+
+    private fun addAllToShoplist() = ingredients.forEach {
+        if (!it.value) {
+            addIngredientToShoplist(it.key)
+        }
+    }
+
+    companion object {
+        private const val BUNDLE_EXTRA_KEY = "MEAL_ID_KEY"
+
+        fun newInstance(mealId: Int) = DetailRecipeFragment().apply {
+            arguments = Bundle().apply { putInt(BUNDLE_EXTRA_KEY, mealId) }
+        }
+    }
 }
