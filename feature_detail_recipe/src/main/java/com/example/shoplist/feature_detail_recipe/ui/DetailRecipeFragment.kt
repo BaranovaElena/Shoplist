@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -96,6 +97,12 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         showErrorMessage(requireContext(), errorType, message)
     }
 
+    override fun showIngredientAddedMsg(ingredient: Pair<String, String>) {
+        Toast.makeText(context, "ingredient added", Toast.LENGTH_SHORT).show()
+        Log.d("@@@", "add ${ingredient.first} to base")
+        ingredients[ingredient] = true
+    }
+
     private fun setBottomSheetAnimation() = BottomSheetBehavior
         .from(binding.bottomSheetFrameLayout)
         .addBottomSheetCallback(object : BottomSheetCallback() {
@@ -108,8 +115,6 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
 
     private fun addIngredientToShoplist(ingredient: Pair<String, String>) {
         presenter.onAddIngredient(ingredient)
-        Log.d("@@@", "add ${ingredient.first} to base")
-        ingredients[ingredient] = true
     }
 
     private fun addAllToShoplist() = ingredients.forEach {

@@ -58,7 +58,6 @@ class IngredientsViewHolder(
                 false -> setOnClickListener {
                     setReady()
                     onButtonClick(Pair(ingredient.name, ingredient.measure))
-                    Toast.makeText(itemView.context, "not realized yet", Toast.LENGTH_SHORT).show()
                 }
             }
         }

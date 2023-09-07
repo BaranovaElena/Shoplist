@@ -38,6 +38,20 @@ class DetailsPresenter(
         Log.d("@@@",
             "entity: name = ${entity.ingredientName}, measure = ${entity.ingredientMeasure.title}: ${entity.ingredientMeasure.amount}, recipe = ${entity.recipe.title}(${entity.recipe.id})"
         )
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                try {
+                    interactor.saveIngredient(entity)
+                    withContext(Dispatchers.Main) {
+                        viewState.showIngredientAddedMsg(ingredient)
+                    }
+                } catch (thr: Throwable) {
+                    withContext(Dispatchers.Main) {
+                        viewState.showError(Errors.LOAD_ERROR,thr.message)
+                    }
+                }
+            }
+        }
     }
 
     private fun getRecipe(id: Int) {

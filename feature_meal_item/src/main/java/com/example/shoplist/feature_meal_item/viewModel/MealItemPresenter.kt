@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 
 class MealItemPresenter(
     private val savingRepo: SavingFavoriteMealRepo,
-    private val gettingRepo: LoadingFavoritesMealRepo
+    private val gettingRepo: LoadingFavoritesMealRepo,
 ) : MealItemController.Presenter {
     private var view: MealItemController.View? = null
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())

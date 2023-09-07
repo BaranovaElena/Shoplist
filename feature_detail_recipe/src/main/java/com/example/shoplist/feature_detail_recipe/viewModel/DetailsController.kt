@@ -2,6 +2,7 @@ package com.example.shoplist.feature_detail_recipe.viewModel
 
 import com.example.shoplist.domain.models.DetailRecipeEntity
 import com.example.shoplist.domain.models.Errors
+import com.example.shoplist.domain.models.ShoplistEntity
 import moxy.MvpPresenter
 import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
@@ -15,10 +16,13 @@ class DetailsController {
         fun showLoading()
         @Skip
         fun showError(errorType: Errors, message: String?)
+        @Skip
+        fun showIngredientAddedMsg(ingredient: Pair<String, String>)
     }
 
     interface Interactor{
         suspend fun getDetailsById(id: Int) : DetailRecipeEntity?
+        suspend fun saveIngredient(ingredient: ShoplistEntity)
     }
 
     abstract class Presenter : MvpPresenter<View>(){
