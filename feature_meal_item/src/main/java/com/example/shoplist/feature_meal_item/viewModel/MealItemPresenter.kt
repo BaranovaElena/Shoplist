@@ -15,7 +15,7 @@ class MealItemPresenter(
     private val gettingRepo: LoadingFavoritesMealRepo
 ) : MealItemController.Presenter {
     private var view: MealItemController.View? = null
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     override fun onAttached(view: MealItemController.View) {
         this.view = view
@@ -28,17 +28,13 @@ class MealItemPresenter(
 
     override fun onLiked(meal: MealShortEntity) {
         scope.launch {
-            withContext(Dispatchers.IO) {
-                savingRepo.saveMeal(meal)
-            }
+            savingRepo.saveMeal(meal)
         }
     }
 
     override fun onDisliked(meal: MealShortEntity) {
         scope.launch {
-            withContext(Dispatchers.IO) {
-                savingRepo.deleteMeal(meal)
-            }
+            savingRepo.deleteMeal(meal)
         }
     }
 
@@ -48,8 +44,8 @@ class MealItemPresenter(
 
     private fun setFavorite(meal: MealShortEntity) {
         scope.launch {
-            withContext(Dispatchers.IO) {
-                gettingRepo.isMealExists(meal.id).collect { res ->
+            gettingRepo.isMealExists(meal.id).collect { res ->
+                withContext(Dispatchers.Main) {
                     if (res) {
                         view?.setLiked()
                     } else {
