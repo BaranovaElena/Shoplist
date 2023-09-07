@@ -23,5 +23,6 @@ class DetailsController {
 
     abstract class Presenter : MvpPresenter<View>(){
         abstract fun onViewCreated(mealId: Int)
+        abstract fun onAddIngredient(ingredient: Pair<String, String>)
     }
 }

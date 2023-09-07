@@ -107,6 +107,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         })
 
     private fun addIngredientToShoplist(ingredient: Pair<String, String>) {
+        presenter.onAddIngredient(ingredient)
         Log.d("@@@", "add ${ingredient.first} to base")
         ingredients[ingredient] = true
     }
