@@ -3,11 +3,9 @@ package com.example.shoplist.feature_detail_recipe.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -97,9 +95,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         showErrorMessage(requireContext(), errorType, message)
     }
 
-    override fun showIngredientAddedMsg(ingredient: Pair<String, String>) {
-        Toast.makeText(context, "ingredient added", Toast.LENGTH_SHORT).show()
-        Log.d("@@@", "add ${ingredient.first} to base")
+    override fun showIngredientAdded(ingredient: Pair<String, String>) {
         ingredients[ingredient] = true
     }
 

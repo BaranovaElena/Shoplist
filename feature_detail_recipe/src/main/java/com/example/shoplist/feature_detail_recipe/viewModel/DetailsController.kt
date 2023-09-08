@@ -17,7 +17,7 @@ class DetailsController {
         @Skip
         fun showError(errorType: Errors, message: String?)
         @Skip
-        fun showIngredientAddedMsg(ingredient: Pair<String, String>)
+        fun showIngredientAdded(ingredient: Pair<String, String>)
     }
 
     interface Interactor{
