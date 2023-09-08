@@ -2,4 +2,5 @@
 <resources>
     <string name="server_error_message">Server error</string>
     <string name="load_error_message">Load error</string>
+    <string name="saving_error_message">Saving error</string>
 </resources>

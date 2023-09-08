@@ -18,6 +18,7 @@ fun showErrorMessage(context: Context, errorType: Errors, errorMessage: String? 
             when (errorType) {
                 Errors.SERVER_ERROR -> { R.string.server_error_message }
                 Errors.LOAD_ERROR -> { R.string.load_error_message }
+                Errors.SAVING_ERROR -> { R.string.saving_error_message }
             }
         ),
         Toast.LENGTH_LONG
