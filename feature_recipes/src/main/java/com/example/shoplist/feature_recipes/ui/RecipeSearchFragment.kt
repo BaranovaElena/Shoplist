@@ -9,7 +9,6 @@ import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.core.ui.setVisibility
 import com.example.shoplist.domain.models.MealsEntity
 import com.example.shoplist.feature_meal_item.ui.MealsAdapter
-import com.example.shoplist.feature_meal_item.ui.MealsViewHolder
 import com.example.shoplist.feature_recipes.R
 import com.example.shoplist.feature_recipes.databinding.FragmentRecipeSearchBinding
 import com.example.shoplist.feature_recipes.models.LoadState
@@ -25,7 +24,7 @@ class RecipeSearchFragment : Fragment(R.layout.fragment_recipe_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model.loadState.observeForever(::renderSearchLoadState)
+        model.loadState.observe(viewLifecycleOwner) { renderSearchLoadState(it) }
 
         with(binding) {
             recipeSearchRecyclerView.apply {

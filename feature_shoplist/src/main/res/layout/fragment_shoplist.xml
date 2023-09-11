@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,33 +9,39 @@
     tools:context=".ui.ShoplistFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/shoplist_recycler_view"
+        android:id="@+id/shoplist_list_rv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/shoplist_select_all_btn"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shoplist_select_all_btn"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:text="@string/shoplist_btn_select_all_text"
+        app:layout_constraintEnd_toStartOf="@id/shoplist_clear_selected_btn"
+        app:layout_constraintTop_toBottomOf="@+id/shoplist_list_rv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shoplist_add_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/shoplist_button_add_text"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/shoplist_clear_button" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/shoplist_clear_selected_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/default_margin"
+        android:text="@string/shoplist_btn_clear_selected_text"
+        app:layout_constraintTop_toBottomOf="@+id/shoplist_list_rv"
+        app:layout_constraintStart_toEndOf="@+id/shoplist_select_all_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/shoplist_clear_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/shoplist_button_clear_text"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toEndOf="@id/shoplist_add_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/shoplist_progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

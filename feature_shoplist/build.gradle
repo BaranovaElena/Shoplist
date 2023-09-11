@@ -36,6 +36,9 @@ dependencies {
     //binding
     implementation(libs.viewbinding.delegate)
 
+    //koin
+    implementation(libs.koin.android)
+
     //navigation
     implementation(libs.cicerone)
 
@@ -48,4 +51,5 @@ dependencies {
     implementation(libs.android.material)
 
     implementation project(':Core')
+    implementation project(':domain')
 }

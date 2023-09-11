@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/disable_mask_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_shoplist_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimary">
+
+        <CheckBox
+            android:id="@+id/item_shoplist_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/min_margin"
+            android:checked="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_shoplist_ingredient_name_tv"/>
+
+        <TextView
+            android:id="@+id/item_shoplist_ingredient_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:maxLines="@integer/item_shoplist_text_view_max_size"
+            android:ellipsize="end"
+            tools:text="name of ingredient wwwwwwwwwwwwwwwww"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/item_shoplist_ingredient_amount_tv"
+            app:layout_constraintStart_toEndOf="@+id/item_shoplist_checkbox"/>
+
+        <TextView
+            android:id="@+id/item_shoplist_ingredient_amount_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/default_padding"
+            tools:text="2.5 sdssdsdsdkg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
