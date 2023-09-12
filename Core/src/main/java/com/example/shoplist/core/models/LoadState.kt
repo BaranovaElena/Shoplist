@@ -1,4 +1,4 @@
-package com.example.shoplist.feature_shoplist.models
+package com.example.shoplist.core.models
 
 import com.example.shoplist.domain.models.Errors
 

@@ -5,11 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.domain.models.MealShortEntity
 import com.example.shoplist.feature_favorites.R
 import com.example.shoplist.feature_favorites.databinding.FragmentFavoritesBinding
-import com.example.shoplist.feature_favorites.models.LoadState
 import com.example.shoplist.feature_meal_item.ui.MealsAdapter
 import com.example.shoplist.feature_favorites.viewModel.FavoritesController
 import org.koin.androidx.viewmodel.ext.android.viewModel

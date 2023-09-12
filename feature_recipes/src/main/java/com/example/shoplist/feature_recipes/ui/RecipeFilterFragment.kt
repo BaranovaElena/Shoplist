@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.core.ui.setVisibility
 import com.example.shoplist.domain.models.MealsEntity
@@ -16,7 +17,6 @@ import com.example.shoplist.domain.models.Filters
 import com.example.shoplist.feature_meal_item.ui.MealsAdapter
 import com.example.shoplist.feature_recipes.R
 import com.example.shoplist.feature_recipes.databinding.FragmentRecipeFilterBinding
-import com.example.shoplist.feature_recipes.models.LoadState
 import com.example.shoplist.feature_recipes.viewModel.RecipeFilerViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -98,12 +98,12 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter) {
         val valuesArray = mutableListOf<String>()
         when (state.value) {
             is CategoriesEntity -> {
-                for (value in state.value.categories) {
+                for (value in (state.value as? CategoriesEntity)?.categories ?: emptyList()) {
                     valuesArray.add(value.title)
                 }
             }
             is AreasEntity -> {
-                for (value in state.value.areas) {
+                for (value in (state.value as? AreasEntity)?.areas ?: emptyList()) {
                     valuesArray.add(value.title)
                 }
             }

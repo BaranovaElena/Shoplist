@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.core.ui.setVisibility
 import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.domain.models.ShoplistEntity
 import com.example.shoplist.feature_shoplist.R
 import com.example.shoplist.feature_shoplist.databinding.FragmentShoplistBinding
-import com.example.shoplist.feature_shoplist.models.LoadState
 import com.example.shoplist.feature_shoplist.viewModel.ShoplistViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
