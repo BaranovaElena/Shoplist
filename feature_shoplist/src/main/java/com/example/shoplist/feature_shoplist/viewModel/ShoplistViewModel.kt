@@ -23,6 +23,7 @@ abstract class ShoplistViewModel : ViewModel() {
     abstract fun onViewCreated()
     abstract fun onItemChecked(ingredientName: String)
     abstract fun onItemUnchecked(ingredientName: String)
+    abstract fun onSelectAllClicked()
 }
 
 class ShoplistViewModelImpl(
@@ -56,6 +57,14 @@ class ShoplistViewModelImpl(
     override fun onItemUnchecked(ingredientName: String) =
         saveModifiedIngredient(ingredientName = ingredientName, isChecked = false)
 
+    override fun onSelectAllClicked() {
+        list.forEach { entity ->
+            if (!entity.isChecked) {
+                saveModifiedIngredient(ingredientName = entity.ingredientName, isChecked = true)
+            }
+        }
+    }
+
     private fun loadIngredients() {
         loadingScope.launch {
             try {
@@ -63,12 +72,12 @@ class ShoplistViewModelImpl(
                     list.clear()
                     list.addAll(ingredients)
                     withContext(Dispatchers.Main) {
-                        loadingLiveData.postValue(LoadState.Success(ingredients))
+                        loadingLiveData.value = LoadState.Success(ingredients)
                     }
                 }
             } catch (ex: Exception) {
                 withContext(Dispatchers.Main) {
-                    loadingLiveData.postValue(LoadState.Error(Errors.LOAD_ERROR, ex.message))
+                    loadingLiveData.value = LoadState.Error(Errors.LOAD_ERROR, ex.message)
                 }
             }
         }
@@ -83,12 +92,13 @@ class ShoplistViewModelImpl(
             savingScope.launch {
                 try {
                     savingRepo.updateIngredient(newIngredient)
+                    list.set(index = list.indexOf(oldIngredient), element = newIngredient)
                     withContext(Dispatchers.Main) {
-                        updatingLiveData.postValue(LoadState.Success(newIngredient))
+                        updatingLiveData.value = LoadState.Success(newIngredient)
                     }
                 } catch (ex: Exception) {
                     withContext(Dispatchers.Main) {
-                        updatingLiveData.postValue(LoadState.Error(Errors.SAVING_ERROR, ex.message))
+                        updatingLiveData.value = LoadState.Error(Errors.SAVING_ERROR, ex.message)
                     }
                 }
             }

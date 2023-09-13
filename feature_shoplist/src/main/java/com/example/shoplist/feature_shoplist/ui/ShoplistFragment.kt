@@ -29,10 +29,13 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
                 adapter = recyclerAdapter
                 layoutManager = LinearLayoutManager(context)
                 addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-
             }
-            shoplistSelectAllBtn.setOnClickListener {  }
-            shoplistClearSelectedBtn.setOnClickListener {  }
+
+            shoplistSelectAllBtn.setOnClickListener {
+                viewModel.onSelectAllClicked()
+            }
+
+            shoplistClearSelectedBtn.setOnClickListener { }
         }
 
         with(viewModel) {
@@ -41,6 +44,7 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
             onViewCreated()
         }
     }
+
     private fun renderUpdatedData(state: LoadState<ShoplistEntity>) = with(binding) {
         when (state) {
             is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
@@ -51,7 +55,7 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
 
     private fun renderLoadedData(state: LoadState<List<ShoplistEntity>>) = with(binding) {
         shoplistProgressView.setVisibility(state is LoadState.Loading)
-        when(state) {
+        when (state) {
             is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
             is LoadState.Success -> recyclerAdapter.updateData(state.value)
             else -> {}
