@@ -18,25 +18,43 @@ class ShoplistAdapter(
         var isChecked: Boolean = false,
     )
 
-    private var list: MutableList<Ingredient> = mutableListOf()
+    private val list: MutableList<Ingredient> = mutableListOf()
 
     fun updateData(ingredients: List<ShoplistEntity>) {
-        ingredients.forEach {
-            list.add(
+        list.clear()
+        list.addAll(
+            ingredients.map {
                 Ingredient(
                     name = it.ingredientName,
                     measure = it.ingredientMeasure.amount.toString() + " " + it.ingredientMeasure.title,
-                    isChecked = false,
+                    isChecked = it.isChecked,
                 )
-            )
-        }
+            }
+        )
         notifyDataSetChanged()
     }
 
-    fun setAllIngredientsReady() {
-        list.forEach { it.isChecked = true }
-        notifyDataSetChanged()
+    fun updateIngredient(ingredient: ShoplistEntity) {
+        val position = list.indexOf(
+            list.firstOrNull { it.name == ingredient.ingredientName }
+        )
+        if (position >= 0) {
+            list.set(
+                index = position,
+                element = Ingredient(
+                    name = ingredient.ingredientName,
+                    measure = ingredient.ingredientMeasure.amount.toString() + " " + ingredient.ingredientMeasure.title,
+                    isChecked = ingredient.isChecked,
+                )
+            )
+            notifyItemChanged(position)
+        }
     }
+
+//    fun setAllIngredientsReady() {
+//        list.forEach { it.isChecked = true }
+//        notifyDataSetChanged()
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         IngredientsViewHolder(parent, onItemChecked, onItemUnchecked)
@@ -58,17 +76,29 @@ class IngredientsViewHolder(
     private val binding by viewBinding(ItemShoplistIngredientBinding::bind)
 
     fun bind(ingredient: ShoplistAdapter.Ingredient) = with(binding) {
+
         itemShoplistIngredientNameTv.text = ingredient.name
         itemShoplistIngredientAmountTv.text = ingredient.measure
 
-        itemShoplistCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                onItemChecked(ingredient.name)
-                setDisabledItem()
+        with(itemShoplistCheckbox) {
+            setOnCheckedChangeListener { _, _ -> run {} }
+            when (ingredient.isChecked) {
+                false -> {
+                    isChecked = false
+                    setEnabledItem()
+                }
+                true -> {
+                    isChecked = true
+                    setDisabledItem()
+                }
             }
-            else {
-                onItemUnchecked(ingredient.name)
-                setEnabledItem()
+
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    onItemChecked(ingredient.name)
+                } else {
+                    onItemUnchecked(ingredient.name)
+                }
             }
         }
     }

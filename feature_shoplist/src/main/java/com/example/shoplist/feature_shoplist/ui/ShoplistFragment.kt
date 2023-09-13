@@ -2,7 +2,6 @@ package com.example.shoplist.feature_shoplist.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,12 +36,20 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
         }
 
         with(viewModel) {
-            loadingLiveData.observe(viewLifecycleOwner) { renderLoadState(it) }
+            loadingLiveData.observe(viewLifecycleOwner) { renderLoadedData(it) }
+            updatingLiveData.observe(viewLifecycleOwner) { renderUpdatedData(it) }
             onViewCreated()
         }
     }
+    private fun renderUpdatedData(state: LoadState<ShoplistEntity>) = with(binding) {
+        when (state) {
+            is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
+            is LoadState.Success -> recyclerAdapter.updateIngredient(state.value)
+            else -> {}
+        }
+    }
 
-    private fun renderLoadState(state: LoadState<List<ShoplistEntity>>?) = with(binding) {
+    private fun renderLoadedData(state: LoadState<List<ShoplistEntity>>) = with(binding) {
         shoplistProgressView.setVisibility(state is LoadState.Loading)
         when(state) {
             is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
@@ -52,11 +59,11 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
     }
 
     private fun onItemUnchecked(ingredientName: String) {
-        Toast.makeText(requireContext(), "uncheck $ingredientName", Toast.LENGTH_SHORT).show()
+        viewModel.onItemUnchecked(ingredientName)
     }
 
     private fun onItemChecked(ingredientName: String) {
-        Toast.makeText(requireContext(), "check $ingredientName", Toast.LENGTH_SHORT).show()
+        viewModel.onItemChecked(ingredientName)
     }
 
     companion object {

@@ -46,4 +46,7 @@ class ShoplistRoomImpl(
             dao.deleteIngredientByTitle(ingredient.ingredientName)
         }
     }
+
+    override suspend fun updateIngredient(ingredient: ShoplistEntity) =
+        dao.saveIngredient(mapper.toApi(ingredient))
 }
