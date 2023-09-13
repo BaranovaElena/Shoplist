@@ -35,13 +35,24 @@ class ShoplistFragment : Fragment(R.layout.fragment_shoplist) {
                 viewModel.onSelectAllClicked()
             }
 
-            shoplistClearSelectedBtn.setOnClickListener { }
+            shoplistClearSelectedBtn.setOnClickListener {
+                viewModel.onClearSelectedClicked()
+            }
         }
 
         with(viewModel) {
             loadingLiveData.observe(viewLifecycleOwner) { renderLoadedData(it) }
             updatingLiveData.observe(viewLifecycleOwner) { renderUpdatedData(it) }
+            deletingLiveData.observe(viewLifecycleOwner) { renderDeletedData(it) }
             onViewCreated()
+        }
+    }
+
+    private fun renderDeletedData(state: LoadState<ShoplistEntity>) = with(binding) {
+        when (state) {
+            is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
+            is LoadState.Success -> recyclerAdapter.deleteIngredient(state.value)
+            else -> {}
         }
     }
 

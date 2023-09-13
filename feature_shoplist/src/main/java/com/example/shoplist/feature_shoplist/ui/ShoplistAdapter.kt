@@ -51,10 +51,15 @@ class ShoplistAdapter(
         }
     }
 
-//    fun setAllIngredientsReady() {
-//        list.forEach { it.isChecked = true }
-//        notifyDataSetChanged()
-//    }
+    fun deleteIngredient(ingredient: ShoplistEntity) {
+        val position = list.indexOf(
+            list.firstOrNull { it.name == ingredient.ingredientName }
+        )
+        if (position >= 0) {
+            list.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         IngredientsViewHolder(parent, onItemChecked, onItemUnchecked)

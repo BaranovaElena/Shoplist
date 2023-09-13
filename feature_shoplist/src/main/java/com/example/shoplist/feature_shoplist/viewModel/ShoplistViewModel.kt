@@ -19,11 +19,13 @@ import kotlinx.coroutines.withContext
 abstract class ShoplistViewModel : ViewModel() {
     abstract val loadingLiveData: LiveData<LoadState<List<ShoplistEntity>>>
     abstract val updatingLiveData: LiveData<LoadState<ShoplistEntity>>
+    abstract val deletingLiveData: LiveData<LoadState<ShoplistEntity>>
 
     abstract fun onViewCreated()
     abstract fun onItemChecked(ingredientName: String)
     abstract fun onItemUnchecked(ingredientName: String)
     abstract fun onSelectAllClicked()
+    abstract fun onClearSelectedClicked()
 }
 
 class ShoplistViewModelImpl(
@@ -33,6 +35,7 @@ class ShoplistViewModelImpl(
 
     override val loadingLiveData = MutableLiveData<LoadState<List<ShoplistEntity>>>()
     override val updatingLiveData = MutableLiveData<LoadState<ShoplistEntity>>()
+    override val deletingLiveData = MutableLiveData<LoadState<ShoplistEntity>>()
     private val list: MutableList<ShoplistEntity> = mutableListOf()
 
     private val loadingScope = CoroutineScope(
@@ -61,6 +64,35 @@ class ShoplistViewModelImpl(
         list.forEach { entity ->
             if (!entity.isChecked) {
                 saveModifiedIngredient(ingredientName = entity.ingredientName, isChecked = true)
+            }
+        }
+    }
+
+    override fun onClearSelectedClicked() {
+        list.forEach { entity ->
+            if (entity.isChecked) {
+                deleteIngredient(ingredientName = entity.ingredientName)
+            }
+        }
+    }
+
+    private fun deleteIngredient(ingredientName: String) {
+        deletingLiveData.value = LoadState.Loading
+        val ingredient = list.firstOrNull { it.ingredientName == ingredientName }
+
+        ingredient?.let {
+            savingScope.launch {
+                try {
+                    savingRepo.deleteIngredient(ingredient)
+                    list.remove(ingredient)
+                    withContext(Dispatchers.Main) {
+                        deletingLiveData.value = LoadState.Success(ingredient)
+                    }
+                } catch (ex: Exception) {
+                    withContext(Dispatchers.Main) {
+                        deletingLiveData.value = LoadState.Error(Errors.SAVING_ERROR, ex.message)
+                    }
+                }
             }
         }
     }
