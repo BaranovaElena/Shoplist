@@ -7,6 +7,20 @@ Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file(localProperties['SIGNING_CONFIG_DEBUG_STORE_FILE'])
+            storePassword localProperties['SIGNING_CONFIG_DEBUG_STORE_PWD']
+            keyAlias localProperties['SIGNING_CONFIG_DEBUG_KEY_ALIAS']
+            keyPassword localProperties['SIGNING_CONFIG_DEBUG_KEY_PWD']
+        }
+        release {
+            storeFile file(localProperties['SIGNING_CONFIG_RELEASE_STORE_FILE'])
+            storePassword localProperties['SIGNING_CONFIG_RELEASE_STORE_PWD']
+            keyAlias localProperties['SIGNING_CONFIG_RELEASE_KEY_ALIAS']
+            keyPassword localProperties['SIGNING_CONFIG_RELEASE_KEY_PWD']
+        }
+    }
     compileSdk 33
 
     defaultConfig {
@@ -17,6 +31,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
