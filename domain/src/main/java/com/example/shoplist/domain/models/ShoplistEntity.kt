@@ -4,6 +4,7 @@ data class ShoplistEntity(
     val ingredientName: String,
     val ingredientMeasure: Measure,
     val recipe: Recipe,
+    val isChecked: Boolean,
 ) {
 
     data class Measure(

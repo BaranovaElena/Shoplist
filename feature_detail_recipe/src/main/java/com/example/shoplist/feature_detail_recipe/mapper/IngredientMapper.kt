@@ -13,7 +13,8 @@ class IngredientMapper {
     ) = ShoplistEntity(
         ingredientName = ingredient.first,
         ingredientMeasure = parseMeasure(ingredient.second),
-        recipe = ShoplistEntity.Recipe(id = recipeId, title = recipeTitle)
+        recipe = ShoplistEntity.Recipe(id = recipeId, title = recipeTitle),
+        isChecked = false,
     )
 
     private fun parseMeasure(measure: String): ShoplistEntity.Measure {

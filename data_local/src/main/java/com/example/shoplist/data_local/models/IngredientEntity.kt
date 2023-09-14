@@ -21,4 +21,7 @@ data class IngredientEntityResponse(
 
     @ColumnInfo(name = "recipeTitle")
     val recipeTitle: String = "",
+
+    @ColumnInfo(name = "isChecked")
+    val isChecked: Boolean = false,
 )

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="shoplist_button_add_text">add</string>
-    <string name="shoplist_button_clear_text">clear all</string>
+    <string name="shoplist_btn_select_all_text">select all</string>
+    <string name="shoplist_btn_clear_selected_text">clear selected</string>
 </resources>

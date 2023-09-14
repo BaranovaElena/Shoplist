@@ -15,6 +15,7 @@ class IngredientMapper {
             id = response.recipeId,
             title = response.recipeTitle,
         ),
+        isChecked = response.isChecked,
     )
 
     fun toApi(
@@ -26,5 +27,6 @@ class IngredientMapper {
         measureAmount = newAmount ?: domain.ingredientMeasure.amount,
         recipeId = domain.recipe.id,
         recipeTitle = domain.recipe.title,
+        isChecked = domain.isChecked,
     )
 }
