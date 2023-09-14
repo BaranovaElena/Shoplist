@@ -51,6 +51,7 @@ android {
     buildFeatures{
         viewBinding true
     }
+    namespace 'com.example.shoplist'
 
     buildTypes.each {
         it.buildConfigField "String", "BASE_URL", "\"" + localProperties['BASE_URL'] + "\""
