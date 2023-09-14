@@ -111,13 +111,21 @@
                 app:layout_constraintStart_toEndOf="@+id/detail_recipe_image_card"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/detail_recipe_add_all_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_recipe_add_all_button_text"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                app:layout_constraintTop_toBottomOf="@+id/detail_recipe_image_card" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/detail_recipe_ingredients_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:paddingHorizontal="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
-                app:layout_constraintTop_toBottomOf="@+id/detail_recipe_image_card"
+                app:layout_constraintTop_toBottomOf="@+id/detail_recipe_add_all_button"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

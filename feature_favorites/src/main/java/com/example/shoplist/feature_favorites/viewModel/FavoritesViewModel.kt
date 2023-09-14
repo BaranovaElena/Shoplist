@@ -1,8 +1,8 @@
 package com.example.shoplist.feature_favorites.viewModel
 
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.domain.models.Errors
 import com.example.shoplist.domain.repos.LoadingFavoritesMealRepo
-import com.example.shoplist.feature_favorites.models.LoadState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

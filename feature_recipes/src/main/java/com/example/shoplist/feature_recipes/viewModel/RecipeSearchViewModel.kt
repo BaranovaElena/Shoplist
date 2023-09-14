@@ -3,10 +3,10 @@ package com.example.shoplist.feature_recipes.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.domain.models.Errors
 import com.example.shoplist.domain.models.MealsEntity
 import com.example.shoplist.domain.repos.LoadingMealRepo
-import com.example.shoplist.feature_recipes.models.LoadState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

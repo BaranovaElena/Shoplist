@@ -3,8 +3,8 @@ package com.example.shoplist.feature_favorites.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.shoplist.core.models.LoadState
 import com.example.shoplist.domain.models.MealShortEntity
-import com.example.shoplist.feature_favorites.models.LoadState
 
 class FavoritesController {
     interface View {
