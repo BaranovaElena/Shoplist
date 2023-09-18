@@ -6,26 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.shoplist.core.models.LoadState
+import com.example.shoplist.core.ui.setVisibility
 import com.example.shoplist.core.ui.showErrorMessage
 import com.example.shoplist.feature_detail_recipe.R
 import com.example.shoplist.domain.models.DetailRecipeEntity
-import com.example.shoplist.domain.models.Errors
 import com.example.shoplist.feature_detail_recipe.databinding.FragmentDetailRecipeBinding
-import com.example.shoplist.feature_detail_recipe.viewModel.DetailsController
+import com.example.shoplist.feature_detail_recipe.viewModel.DetailsViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import moxy.MvpAppCompatFragment
-import moxy.ktx.moxyPresenter
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
+class DetailRecipeFragment : Fragment(R.layout.fragment_detail_recipe) {
     private val binding by viewBinding(FragmentDetailRecipeBinding::bind)
-    private val p: DetailsController.Presenter by inject()
-    private val presenter by moxyPresenter { p }
+    private val viewModel: DetailsViewModel by viewModel()
     private val ingredientsAdapter = IngredientsAdapter(::addIngredientToShoplist)
     private val ingredients: MutableMap<Pair<String, String>, Boolean> = mutableMapOf()
 
@@ -40,7 +39,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.getInt(BUNDLE_EXTRA_KEY)?.let { id ->
-            presenter.onViewCreated(id)
+            viewModel.onViewCreated(id)
         }
 
         binding.detailRecipeIngredientsRecyclerView.apply {
@@ -54,15 +53,33 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
             ingredientsAdapter.setAllIngredientsReady()
             addAllToShoplist()
         }
+
+        viewModel.loadingState.observe(viewLifecycleOwner) { renderLoadingState(it) }
+        viewModel.savingState.observe(viewLifecycleOwner) { renderSavingState(it) }
     }
 
-    override fun showRecipe(recipe: DetailRecipeEntity) = with(binding) {
+    private fun renderSavingState(state: LoadState<Pair<String, String>>) = when(state) {
+        is LoadState.Error -> showErrorMessage(binding.root.context, state.errorType, state.message)
+        is LoadState.Success -> showIngredientAdded(state.value)
+        else -> {}
+    }
+
+    private fun renderLoadingState(state: LoadState<DetailRecipeEntity>) = with(binding) {
+        detailRecipeProgressBar.setVisibility(state is LoadState.Loading)
+        detailRecipeContainer.setVisibility(state !is LoadState.Loading)
+
+        when (state) {
+            is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
+            is LoadState.Success -> showRecipe(state.value)
+            else -> {}
+        }
+    }
+
+    private fun showRecipe(recipe: DetailRecipeEntity) = with(binding) {
         recipe.ingredients.forEach {
             ingredients[it.toPair()] = false
         }
 
-        detailRecipeProgressBar.visibility = View.GONE
-        detailRecipeContainer.visibility = View.VISIBLE
         detailRecipeTitleTextView.text = recipe.title
 
         Glide
@@ -85,17 +102,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         ingredientsAdapter.updateData(recipe.ingredients)
     }
 
-    override fun showLoading() = with(binding) {
-        detailRecipeProgressBar.visibility = View.VISIBLE
-        detailRecipeContainer.visibility = View.GONE
-    }
-
-    override fun showError(errorType: Errors, message: String?) {
-        binding.detailRecipeProgressBar.visibility = View.GONE
-        showErrorMessage(requireContext(), errorType, message)
-    }
-
-    override fun showIngredientAdded(ingredient: Pair<String, String>) {
+    private fun showIngredientAdded(ingredient: Pair<String, String>) {
         ingredients[ingredient] = true
     }
 
@@ -110,7 +117,7 @@ class DetailRecipeFragment : MvpAppCompatFragment(), DetailsController.View {
         })
 
     private fun addIngredientToShoplist(ingredient: Pair<String, String>) {
-        presenter.onAddIngredient(ingredient)
+        viewModel.onAddIngredient(ingredient)
     }
 
     private fun addAllToShoplist() = ingredients.forEach {

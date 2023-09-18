@@ -9,7 +9,7 @@ import androidx.room.Query
 import androidx.room.RoomDatabase
 import com.example.shoplist.data_local.models.MealShortEntityResponse
 
-@Database(entities = [MealShortEntityResponse::class], version = 1)
+@Database(entities = [MealShortEntityResponse::class], version = 1, exportSchema = false)
 abstract class RecipesDatabase : RoomDatabase() {
     abstract fun getDao(): RecipesDao
 }

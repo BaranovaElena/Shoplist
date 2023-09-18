@@ -2,7 +2,6 @@ package com.example.shoplist.feature_detail_recipe.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.shoplist.feature_detail_recipe.R
