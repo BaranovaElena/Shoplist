@@ -1,4 +1,6 @@
 # Shoplist
+
+# Available at RuStore https://apps.rustore.ru/app/com.example.shoplist
 application for searching recipes, saving favorites recipes and simple creating list of ingridiients
 
 You can find the recipe you need by entering the name of the dish in the search bar.
