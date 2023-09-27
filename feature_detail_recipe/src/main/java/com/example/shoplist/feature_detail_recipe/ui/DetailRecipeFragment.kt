@@ -58,6 +58,11 @@ class DetailRecipeFragment : Fragment(R.layout.fragment_detail_recipe) {
         viewModel.savingState.observe(viewLifecycleOwner) { renderSavingState(it) }
     }
 
+    override fun onDestroyView() {
+        binding.detailRecipeIngredientsRecyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private fun renderSavingState(state: LoadState<Pair<String, String>>) = when(state) {
         is LoadState.Error -> showErrorMessage(binding.root.context, state.errorType, state.message)
         is LoadState.Success -> showIngredientAdded(state.value)

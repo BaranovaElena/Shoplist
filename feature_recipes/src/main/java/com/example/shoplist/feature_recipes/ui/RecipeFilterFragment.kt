@@ -49,6 +49,11 @@ class RecipeFilterFragment : Fragment(R.layout.fragment_recipe_filter) {
         }
     }
 
+    override fun onDestroyView() {
+        binding.recipeFilterRecyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private fun renderFilterLoadState(state: LoadState<Any>) {
         binding.recipeFilterProgressBar.setVisibility(state !is LoadState.Error)
         when (state) {
