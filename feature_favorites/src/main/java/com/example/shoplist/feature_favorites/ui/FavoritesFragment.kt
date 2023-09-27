@@ -51,4 +51,9 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites), FavoritesContro
             is LoadState.Loading -> {}
         }
     }
+
+    override fun onDestroyView() {
+        binding.favoritesRecyclerView.adapter = null
+        super.onDestroyView()
+    }
 }
