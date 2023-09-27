@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity(),
         this.setTheme(
             when (theme) {
                 Themes.DEFAULT.ordinal -> R.style.Theme_Shoplist
-                Themes.INDIGO.ordinal -> R.style.Theme_Shoplist_Indigo
-                Themes.ORANGE.ordinal -> R.style.Theme_Shoplist_Orange
+                Themes.CORAL.ordinal -> R.style.Theme_Shoplist_Coral
+                Themes.MINT.ordinal -> R.style.Theme_Shoplist_Mint
                 else -> R.style.Theme_Shoplist
             }
         )

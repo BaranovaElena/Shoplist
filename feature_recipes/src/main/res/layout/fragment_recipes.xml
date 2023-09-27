@@ -8,7 +8,6 @@
         android:id="@+id/recipes_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorOnPrimary"
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:layout_constraintTop_toTopOf="parent"/>

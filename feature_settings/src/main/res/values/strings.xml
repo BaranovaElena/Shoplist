@@ -2,6 +2,6 @@
 <resources>
     <string name="settings_theme_title_text">Choose the application theme:</string>
     <string name="theme_default">Standart</string>
-    <string name="theme_indigo">Indigo</string>
-    <string name="theme_orange">Orange</string>
+    <string name="theme_coral">Coral</string>
+    <string name="theme_mint">Mint</string>
 </resources>
