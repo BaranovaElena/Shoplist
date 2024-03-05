@@ -13,8 +13,8 @@ Products from the shopping list can be deleted after purchase one by one or the 
 
 You can also choose and install the app theme you like more.
 
-![1_](https://github.com/BaranovaElena/Shoplist/assets/75544888/a245bc8d-9ea9-4860-b979-bdff88522160)
-![2_](https://github.com/BaranovaElena/Shoplist/assets/75544888/a6129869-6d35-4a86-a26f-a045bbfcfc71)
-![3_](https://github.com/BaranovaElena/Shoplist/assets/75544888/e29780a6-625a-4cf9-903f-867e6709c658)
-![4_](https://github.com/BaranovaElena/Shoplist/assets/75544888/25215ec6-7994-4e44-8eb6-f67838b3e20f)
-![5_](https://github.com/BaranovaElena/Shoplist/assets/75544888/a6e0f660-6aa4-43b8-a9f9-437cebfdb60f)
+![1 1_](https://github.com/BaranovaElena/Shoplist/assets/75544888/12b6eeb9-7dfe-437d-a8c5-768fb56b1bc2)
+![1 2_](https://github.com/BaranovaElena/Shoplist/assets/75544888/38b0ff05-9348-49e9-9830-7a166e3192c2)
+![1 3_](https://github.com/BaranovaElena/Shoplist/assets/75544888/c5d8b446-f502-4f0b-83d6-52b8634bbf24)
+![1 4_](https://github.com/BaranovaElena/Shoplist/assets/75544888/ac76c7d4-59a3-49cf-8d89-9170c44ad492)
+![1 5_](https://github.com/BaranovaElena/Shoplist/assets/75544888/ec8cfa94-1ab1-4f49-9568-00d0690ff586)
