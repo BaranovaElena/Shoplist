@@ -1,6 +1,8 @@
 package com.example.shoplist.feature_detail_recipe.di
 
 import com.example.shoplist.domain.repos.LoadingDetailsRepo
+import com.example.shoplist.domain.repos.LoadingFavoritesMealRepo
+import com.example.shoplist.domain.repos.SavingFavoriteMealRepo
 import com.example.shoplist.domain.repos.SavingShoplistRepo
 import com.example.shoplist.feature_detail_recipe.mapper.IngredientMapper
 import com.example.shoplist.feature_detail_recipe.viewModel.DetailsViewModel
@@ -13,6 +15,8 @@ val detailRecipeModule = module {
         DetailsViewModelImpl(
             get<LoadingDetailsRepo>(),
             get<SavingShoplistRepo>(),
+            get<SavingFavoriteMealRepo>(),
+            get<LoadingFavoritesMealRepo>(),
             get<IngredientMapper>(),
         )
     }

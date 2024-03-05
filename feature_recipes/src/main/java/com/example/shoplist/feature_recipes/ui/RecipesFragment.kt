@@ -25,9 +25,13 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes) {
         )
 
         with(binding) {
-            weatherViewPager.adapter = RecipeViewPagerAdapter(requireActivity(), fragments)
+            recipesViewPager.adapter = RecipeViewPagerAdapter(
+                fragmentManager = childFragmentManager,
+                lifecycle = viewLifecycleOwner.lifecycle,
+                fragments = fragments
+            )
 
-            TabLayoutMediator(weatherTabLayout, weatherViewPager) { tab, pos ->
+            TabLayoutMediator(recipesTabLayout, recipesViewPager) { tab, pos ->
                 tab.text = fragments[pos].title
             }.attach()
         }

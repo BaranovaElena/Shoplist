@@ -43,6 +43,11 @@ class RecipeSearchFragment : Fragment(R.layout.fragment_recipe_search) {
         }
     }
 
+    override fun onDestroyView() {
+        binding.recipeSearchRecyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private fun renderSearchLoadState(state: LoadState<MealsEntity>) {
         with(binding) {
             recipeSearchProgressBar.setVisibility(state is LoadState.Loading)

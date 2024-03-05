@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.example.shoplist.data_local'
-    compileSdk 33
+    compileSdk libs.versions.compileSdk.get() as Integer
 
     defaultConfig {
-        minSdk 24
-        targetSdk 33
+        minSdk libs.versions.minSdk.get() as Integer
+        targetSdk libs.versions.targetSdk.get() as Integer
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,7 +26,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = libs.versions.jvmTarget.get()
     }
 }
 

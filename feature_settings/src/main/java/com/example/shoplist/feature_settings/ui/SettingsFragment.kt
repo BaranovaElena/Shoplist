@@ -29,8 +29,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         binding.settingsThemesRadioGroup.apply {
             setOnCheckedChangeListener { _, checkedId ->
                 val newTheme = when (checkedId) {
-                    R.id.settings_themes_radio_indigo -> Themes.INDIGO.ordinal
-                    R.id.settings_themes_radio_red -> Themes.ORANGE.ordinal
+                    R.id.settings_themes_radio_coral -> Themes.CORAL.ordinal
+                    R.id.settings_themes_radio_red -> Themes.MINT.ordinal
                     else -> Themes.DEFAULT.ordinal
                 }
 
@@ -41,8 +41,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             check(
                 when (arguments?.getInt(BUNDLE_EXTRA_KEY)) {
                     Themes.DEFAULT.ordinal -> R.id.settings_themes_radio_default
-                    Themes.INDIGO.ordinal -> R.id.settings_themes_radio_indigo
-                    Themes.ORANGE.ordinal -> R.id.settings_themes_radio_red
+                    Themes.CORAL.ordinal -> R.id.settings_themes_radio_coral
+                    Themes.MINT.ordinal -> R.id.settings_themes_radio_red
                     else -> R.id.settings_themes_radio_default
                 }
             )
@@ -55,8 +55,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         (requireActivity() as Controller).saveTheme(
             when (checkedId) {
                 R.id.settings_themes_radio_default -> Themes.DEFAULT.ordinal
-                R.id.settings_themes_radio_indigo -> Themes.INDIGO.ordinal
-                R.id.settings_themes_radio_red -> Themes.ORANGE.ordinal
+                R.id.settings_themes_radio_coral -> Themes.CORAL.ordinal
+                R.id.settings_themes_radio_red -> Themes.MINT.ordinal
                 else -> Themes.DEFAULT.ordinal
             }
         )

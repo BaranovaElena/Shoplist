@@ -53,29 +53,42 @@ class DetailRecipeFragment : Fragment(R.layout.fragment_detail_recipe) {
             ingredientsAdapter.setAllIngredientsReady()
             addAllToShoplist()
         }
+        binding.detailRecipeLikeImageView.setOnClickListener {
+            it.isSelected = !it.isSelected
+            binding.detailRecipeLikeImageView.setImageResource(
+                if (it.isSelected) R.drawable.ic_favorite_full
+                else R.drawable.ic_favorite_border
+            )
+            viewModel.onLikeClicked(it.isSelected)
+        }
 
         viewModel.loadingState.observe(viewLifecycleOwner) { renderLoadingState(it) }
         viewModel.savingState.observe(viewLifecycleOwner) { renderSavingState(it) }
     }
 
-    private fun renderSavingState(state: LoadState<Pair<String, String>>) = when(state) {
+    override fun onDestroyView() {
+        binding.detailRecipeIngredientsRecyclerView.adapter = null
+        super.onDestroyView()
+    }
+
+    private fun renderSavingState(state: LoadState<Pair<String, String>>) = when (state) {
         is LoadState.Error -> showErrorMessage(binding.root.context, state.errorType, state.message)
         is LoadState.Success -> showIngredientAdded(state.value)
         else -> {}
     }
 
-    private fun renderLoadingState(state: LoadState<DetailRecipeEntity>) = with(binding) {
+    private fun renderLoadingState(state: LoadState<Pair<DetailRecipeEntity, Boolean>>) = with(binding) {
         detailRecipeProgressBar.setVisibility(state is LoadState.Loading)
         detailRecipeContainer.setVisibility(state !is LoadState.Loading)
 
         when (state) {
             is LoadState.Error -> showErrorMessage(root.context, state.errorType, state.message)
-            is LoadState.Success -> showRecipe(state.value)
+            is LoadState.Success -> showRecipe(state.value.first, state.value.second)
             else -> {}
         }
     }
 
-    private fun showRecipe(recipe: DetailRecipeEntity) = with(binding) {
+    private fun showRecipe(recipe: DetailRecipeEntity, isFavorite: Boolean) = with(binding) {
         recipe.ingredients.forEach {
             ingredients[it.toPair()] = false
         }
@@ -100,6 +113,8 @@ class DetailRecipeFragment : Fragment(R.layout.fragment_detail_recipe) {
         }
         detailRecipeInstructionsTextView.text = recipe.instructions
         ingredientsAdapter.updateData(recipe.ingredients)
+        if (isFavorite)
+            detailRecipeLikeImageView.setImageResource(R.drawable.ic_favorite_full)
     }
 
     private fun showIngredientAdded(ingredient: Pair<String, String>) {

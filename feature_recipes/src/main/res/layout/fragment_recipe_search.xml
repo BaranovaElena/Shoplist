@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/recipe_search_input_layout_hint"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
         app:endIconMode="clear_text"
         app:helperText="@string/recipe_search_input_layout_helper"
         app:layout_constraintTop_toTopOf="parent">
@@ -48,7 +48,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="?attr/colorOnPrimary"
             android:visibility="gone"/>
 
         <com.google.android.material.textview.MaterialTextView

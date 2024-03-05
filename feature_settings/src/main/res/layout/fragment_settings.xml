@@ -32,18 +32,18 @@
             android:text="@string/theme_default"/>
 
         <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/settings_themes_radio_indigo"
+            android:id="@+id/settings_themes_radio_coral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/theme_indigo" />
+            android:text="@string/theme_coral" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/settings_themes_radio_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/theme_orange"/>
+            android:text="@string/theme_mint"/>
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
